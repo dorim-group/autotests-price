@@ -1,0 +1,36 @@
+
+  //});
+  
+  /*it("Sholud pick drug into the order", () => {
+    /*cy.restoreLocalStorage(["search"]);
+    cy.log(localStorage);
+    cy.get(
+      ":nth-child(3) > .DataGridSubRow > :nth-child(5) > :nth-child(1) > .css-1nxrtzm > :nth-child(3)",
+    ).click;
+  });*/
+
+
+  /*cy.get(
+      'p[class="MuiTypography-root MuiTypography-caption MuiTypography-noWrap css-j6qiqn"]',
+    ).should("contain", "Акалтын");
+    cy.get(
+      ".DataGridCell.css-1nj2nts p.MuiTypography-root.MuiTypography-body2.MuiTypography-alignRight.css-130oaea",
+    )
+      .eq(0)
+      .invoke("text")
+      .should("eq", "30% / 7 дней");
+    // Извлекаем текст из всех четырех колонок и сохраняем их в массив
+    cy.get(
+      ".DataGridCell.css-1nj2nts p.MuiTypography-root.MuiTypography-body2.MuiTypography-noWrap.css-1svr7lm",
+    )
+      .eq(0) // Выбираем первый элемент из найденных
+      .invoke("text")
+      .should("eq", "01.10.2024");
+    cy.saveLocalStorage(["search"]);*/
+
+
+    /*before(() => {
+    /*cy.restoreLocalStorage(['login'])
+    cy.log(localStorage)*/
+
+  //})
