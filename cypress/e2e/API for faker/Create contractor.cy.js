@@ -1,16 +1,17 @@
 import { faker } from "@faker-js/faker";
-const fakeCompanyName = faker.company.name();
-const fakePin = faker.finance.pin(9);
-const fakeDescription = faker.lorem.sentence(5);
-
-
 
 describe("Login", () => {
-  before(() => {
+  beforeEach(() => {
     cy.DevRest();
   });
+  for (let i = 0; i < 10; i++) {
     it("Create Contractor", () => {
-      const token = window.localStorage.getItem('access_token');
+      const fakeCompanyName = faker.company.name();
+      const fakePin = faker.finance.pin(9);
+      const fakeDescription = faker.lorem.sentence(5);
+
+      const token = window.localStorage.getItem("access_token");
+      cy.log(`Token for iteration ${i}: ${token}`);
       cy.request({
         method: "POST",
         url: "https://api.base.dev.dorim.com/v1/contractors",
@@ -28,16 +29,14 @@ describe("Login", () => {
           parent_id: 0,
           tin: fakePin,
           activity_status_id: 1,
-          responsible_manager_id: 191,
+          responsible_manager_id: 31,
           price_list_source: "",
         },
       }).then((response) => {
-          expect(response.status).eq(200);
-          expect(response.body).to.exist;
-          cy.log(`Response: ${JSON.stringify(response.body)}`);
-      })
+        expect(response.status).eq(200);
+        expect(response.body).to.exist;
+        cy.log(`Response: ${JSON.stringify(response.body)}`);
+      });
     });
-  });
-  
- 
-       
+  }
+});
