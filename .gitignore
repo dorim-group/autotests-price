@@ -28,3 +28,5 @@ npm-debug.log
 # Игнорировать системные файлы, которые могут быть добавлены в систему контроля версий по ошибке
 .DS_Store
 Thumbs.db
+.prettierignore
+.prettierrc
