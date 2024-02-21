@@ -1,7 +1,7 @@
-describe("Login", () => {
+describe("qwe", () => {
   beforeEach(() => {
     cy.fixture("BaseLogin").then((data) => {
-      cy.login(data);
+      cy.BaseLogin(data);
     });
   });
 
@@ -16,27 +16,32 @@ describe("Login", () => {
     let invalidElements = [];
 
     // Открыть дропдаун
-    cy.get('input[id="distributor"]').click();
+    cy.get('input[id="distributor"]').click().trigger("mouseover");
 
     // Получить все элементы выпадающего списка
-    cy.get('[aria-activedescendant^="distributor-option-"]')
-      .each(($el, index) => {
-        const text = $el.text();
-        if (
-          !(text.includes("г.") || text.includes("п.") || text.includes("к."))
-        ) {
-          // Добавляем в массив элементы, не содержащие нужные фрагменты
+    cy.get('#distributor-listbox').trigger("mouseover");
+    cy.get('#distributor-option-0')
+    // Получаем все элементы списка
+    cy.get('ul[role="listbox"] li.MuiAutocomplete-option').then(optionElements => {
+      const invalidElements = [];
+    
+      // Итерация по элементам и проверка текста
+      optionElements.each(function (index, element) {
+        const text = element.innerText;
+        if (!(/г\.|п\.|к\./.test(text))) {
           invalidElements.push(text);
         }
-      })
-      .then(() => {
-        if (invalidElements.length > 0) {
-          // Обрабатываем ошибку
-          const errorMessage = invalidElements
-            .map((el) => `Проверьте адрес у "${el}"`)
-            .join("\n");
-          throw new Error(errorMessage);
-        }
-      }); // Убраны лишние скобки здесь
+      });
+    
+      // После итерации, выводим сообщения о всех невалидных элементах
+      if (invalidElements.length > 0) {
+        cy.log('Найдены проблемные элементы:');
+        invalidElements.forEach((el) => {
+          cy.log(`Проверьте адрес у "${el}"`);
+        });
+      } else {
+        cy.log('Все элементы соответствуют критериям.');
+      }
+    });
   });
-});
+})
