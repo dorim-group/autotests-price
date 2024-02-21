@@ -39,3 +39,25 @@ Cypress.Commands.add('DevRest', () => {
     window.localStorage.setItem('access_token', response.body.access_token);
   });
 });
+
+
+Cypress.Commands.add("BaseLogin", ({ phone, password }) => {
+  cy.log("Переход на страницу авторизации");
+  Cypress.config('baseURL', Cypress.env('devBaseURL'));
+  cy.visit("/auth/sign-in");
+
+  // Проверяем наличие инпутов логина и вводим наши данные
+  cy.log("Ввод номера телефона");
+  cy.get('input[id="phone"]').should("be.empty").type(phone);
+ 
+
+  // Аналогично с паролем
+  cy.log("Ввод пароля");
+  cy.get('input[id="password"]').should("be.visible").type(password);
+  // Клик по кнопке для авторизации
+  cy.get('button[type="submit"]').should("be.visible").click();
+  cy.wait(5000)
+  cy.url().should(async (url) => {
+    expect(url).to.contains("/search");
+  });
+});
