@@ -20,16 +20,16 @@ describe("Login", () => {
           accept: "application/json",
         },
         body: {
-          contractor_type_id: 9,
+          contractor_type_id: 9, //Аптечный офис
           name: fakeCompanyName,
-          legal_status_id: 18,
+          legal_status_id: 18, //ООО
           country_id: "860",
           country_name: "Узбекистан",
           description: fakeDescription,
           parent_id: 0,
           tin: fakePin,
           activity_status_id: 1,
-          responsible_manager_id: 31,
+          responsible_manager_id: 31, // Timur
           price_list_source: "",
         },
       }).then((response) => {
