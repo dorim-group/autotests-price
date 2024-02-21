@@ -3,7 +3,7 @@ const { defineConfig } = require("cypress");
 module.exports = defineConfig({
   e2e: {
     failOnStatusCode: false,
-    baseUrl: "https://price.dev.dorim.com", // Base URL
+    baseUrl: "https://base.dev.dorim.com", // Base URL
     viewportWidth: 1280,
     viewportHeight: 728,
     setupNodeEvents(on, config) {

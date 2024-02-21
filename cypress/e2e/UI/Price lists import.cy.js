@@ -6,7 +6,6 @@ describe("Login", () => {
   });
 
   it("The distributor should have a city at the dropdown", () => {
-    Cypress.config('baseURL', Cypress.env('devBaseURL'));
     cy.visit("/");
     cy.get("a[href='/price-lists']").trigger("mouseover");
     cy.contains("Прайс-листы").click();
