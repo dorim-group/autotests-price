@@ -1,12 +1,14 @@
 describe("qwe", () => {
   beforeEach(() => {
-    cy.fixture("BaseLogin").then((data) => {
-      cy.BaseLogin(data);
+    // cy.fixture("BaseLogin").then((data) => {
+      cy.fixture("BaseLogin").then((data) => {
+      cy.ProdLogin(data);
     });
+    
   });
 
-  it("The distributor should have a city at the dropdown", () => {
-    cy.visit("/");
+  it("The distributor should have a city at the dropdown",  () => {
+    // cy.visit("/");
     cy.get("a[href='/price-lists']").trigger("mouseover");
     cy.contains("Прайс-листы").click();
     cy.url().should("include", "/price-lists");

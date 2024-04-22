@@ -1,10 +1,11 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  projectId: "843c5x",
   e2e: {
     failOnStatusCode: false,
     baseUrl: "https://base.dev.dorim.com", // Base URL
-    viewportWidth: 1280,
+    viewportWidth: 1366,
     viewportHeight: 728,
     setupNodeEvents(on, config) {
       config.cacheAcrossSpecs = true;

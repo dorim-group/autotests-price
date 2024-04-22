@@ -1,6 +1,6 @@
 describe("Login", () => {
   before(() => {
-    cy.DevRest();
+    cy.ProdRest();
   });
   // Заканчивается логин, начинается перебор инн из файла
   it("Get information from stat.uz", () => {
@@ -11,7 +11,7 @@ describe("Login", () => {
         cy.request({
           failOnStatusCode: false,
           method: "GET",
-          url: `https://api.price.dev.dorim.com/v1/contractor-data/${inn}`,
+          url: `https://api.price.dorim.com/v1/contractor-data/${inn}`,
           headers: {
             Authorization: `Bearer ${token}`,
             accept: "application/json",

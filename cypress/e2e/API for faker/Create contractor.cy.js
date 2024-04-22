@@ -1,20 +1,26 @@
 import { faker } from "@faker-js/faker";
 
 describe("Login", () => {
-  beforeEach(() => {
-    cy.DevRest();
+  before(() => {
+    // cy.DevRest();
+    cy.StageRest();
   });
-  for (let i = 0; i < 10; i++) {
+  beforeEach(() => {
+    const token = Cypress.env('access_token');
+  });
+  for (let i = 0; i < 50; i++) {
     it("Create Contractor", () => {
       const fakeCompanyName = faker.company.name();
       const fakePin = faker.finance.pin(9);
       const fakeDescription = faker.lorem.sentence(5);
 
-      const token = window.localStorage.getItem("access_token");
+      // const token = window.localStorage.getItem("access_token");
+      const token = Cypress.env('access_token');
       cy.log(`Token for iteration ${i}: ${token}`);
       cy.request({
         method: "POST",
-        url: "https://api.base.dev.dorim.com/v1/contractors",
+        // url: "https://api.base.dev.dorim.com/v1/contractors",
+        url: "https://api.base.stage.dorim.com/v1/contractors",
         headers: {
           Authorization: "Bearer " + token,
           accept: "application/json",

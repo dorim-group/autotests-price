@@ -31,3 +31,7 @@ Thumbs.db
 .prettierignore
 .prettierrc
 Notes/
+
+# Игнорировать скриншоты, которые могут быть созданы в процессе работы
+*/screenshots
+*.png
