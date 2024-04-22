@@ -167,47 +167,11 @@ describe("API Tests for Release Form and Measure Unit", () => {
       7023: [7505, 7506, 7512, 7517, 7516, 7524, 7511, 7525],
       7027: [7505, 7506, 7512, 7517, 7516, 7524, 7511, 7525],
       7021: [7505, 7506, 7512, 7517, 7516, 7524, 7511, 7525],
-    };
+    }
     Object.entries(testCases).forEach(([releaseForm, measureUnits]) => {
       measureUnits.forEach((measure_unit_id) => {
-        it(`should handle measure unit ${measure_unit_id} for release form ${releaseForm}`, () => {
-          cy.request({
-            method: "PUT",
-            url: `https://api.base.stage.dorim.com/v1/drugs/50238`,
-            headers: {
-              Authorization: "Bearer " + token,
-              accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: {
-              is_receipt: false,
-              name: "тестовый",
-              form: "",
-              number: 0,
-              blister_count: 0,
-              barcode: null,
-              barcodes: [],
-              vat_id: 43,
-              ikpu: 0,
-              maker_id: 1234,
-              maker_name: "AAPO-SPA naturliche Heilmittel GmbH",
-              country_name: "Германия",
-              category_id: 6970,
-              measure_unit_id: 6978,
-              inn_id: 1141,
-              class_id: 0,
-              record_status_id: 200,
-              license_holder_id: 1234,
-              release_form_id: releaseForm,
-              url_resources: {},
-            },
-          }).then((response) => {
-            expect(response.status).to.eq(200);
-          });
-        });
-
-        cy.request({
-          method: "PATCH",
+    cy.request({
+          method: "PUT",
           url: `https://api.base.stage.dorim.com/v1/drugs/50238`,
           headers: {
             Authorization: "Bearer " + token,
@@ -215,26 +179,75 @@ describe("API Tests for Release Form and Measure Unit", () => {
             "Content-Type": "application/json",
           },
           body: {
-            position: 0,
-            dosage: 234,
-            inn_id: 1110,
-            measure_unit_id: measure_unit_id,
+            is_receipt: false,
+            name: "тестовый",
+            form: "",
+            number: 0,
+            blister_count: 0,
+            barcode: null,
+            barcodes: [],
+            vat_id: 43,
+            ikpu: 0,
+            maker_id: 1234,
+            maker_name: "AAPO-SPA naturliche Heilmittel GmbH",
+            country_name: "Германия",
+            category_id: 6970,
+            measure_unit_id: 6978,
+            inn_id: 1141,
+            class_id: 0,
+            record_status_id: 200,
+            license_holder_id: 1234,
+            release_form_id: releaseForm,
+            url_resources: {},
           },
         }).then((response) => {
-          expect(response.status).to.eq(204);
-        });
+          const expectedStatus = measureUnits.includes(measure_unit_id)
+            ? 200
+            : 400;
+          expect(response.status).to.eq(expectedStatus);
+        })
+      
+
+      cy.request({
+        method: "PATCH",
+        url: `https://api.base.stage.dorim.com/v1/drugs/50238/dosages`,
+        headers: {
+          Authorization: "Bearer " + token,
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: {
+          dosages: [
+            {
+              position: 0,
+              inn_id: 1110,
+              measure_unit_id: measure_unit_id,
+              dosage: 234,
+            },
+          ],
+        },
+      }).then((response) => {
+        const expectedStatus = measureUnits.includes(measure_unit_id)
+          ? 204
+          : 400;
+        expect(response.status).to.eq(expectedStatus);
+      })
         cy.request({
-          method: "GET",
-          url: `https://api.base.stage.dorim.com/v1/drugs/50238`,
-          headers: {
-            Authorization: "Bearer " + token,
-            accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }).then((response) => {
-          expect(response.status).to.eq(200);
-        });
+        method: "GET",
+        url: `https://api.base.stage.dorim.com/v1/drugs/50238`,
+        headers: {
+          Authorization: "Bearer " + token,
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        const expectedStatus = measureUnits.includes(measure_unit_id)
+          ? 200
+          : 400;
+        expect(response.status).to.eq(expectedStatus);
+        cy.log(`${JSON.stringify(response.body)}`);
       });
     });
+})
   });
 });
