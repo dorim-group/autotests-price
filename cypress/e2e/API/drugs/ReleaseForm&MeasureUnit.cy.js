@@ -3,7 +3,7 @@ describe("API Tests for Release Form and Measure Unit", () => {
     cy.StageRest();
   });
 
-  it("потом исправлю", () => {
+  it("Соотношение действующего вещества и дозировки", () => {
     const token = Cypress.env("access_token");
     const testCases = {
       7464: [7504, 7505, 7506, 7507, 7508, 7509],
@@ -167,10 +167,10 @@ describe("API Tests for Release Form and Measure Unit", () => {
       7023: [7505, 7506, 7512, 7517, 7516, 7524, 7511, 7525],
       7027: [7505, 7506, 7512, 7517, 7516, 7524, 7511, 7525],
       7021: [7505, 7506, 7512, 7517, 7516, 7524, 7511, 7525],
-    }
+    };
     Object.entries(testCases).forEach(([releaseForm, measureUnits]) => {
       measureUnits.forEach((measure_unit_id) => {
-    cy.request({
+        cy.request({
           method: "PUT",
           url: `https://api.base.stage.dorim.com/v1/drugs/50238`,
           headers: {
@@ -205,49 +205,49 @@ describe("API Tests for Release Form and Measure Unit", () => {
             ? 200
             : 400;
           expect(response.status).to.eq(expectedStatus);
-        })
-      
+        });
 
-      cy.request({
-        method: "PATCH",
-        url: `https://api.base.stage.dorim.com/v1/drugs/50238/dosages`,
-        headers: {
-          Authorization: "Bearer " + token,
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: {
-          dosages: [
-            {
-              position: 0,
-              inn_id: 1110,
-              measure_unit_id: measure_unit_id,
-              dosage: 234,
-            },
-          ],
-        },
-      }).then((response) => {
-        const expectedStatus = measureUnits.includes(measure_unit_id)
-          ? 204
-          : 400;
-        expect(response.status).to.eq(expectedStatus);
-      })
         cy.request({
-        method: "GET",
-        url: `https://api.base.stage.dorim.com/v1/drugs/50238`,
-        headers: {
-          Authorization: "Bearer " + token,
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }).then((response) => {
-        const expectedStatus = measureUnits.includes(measure_unit_id)
-          ? 200
-          : 400;
-        expect(response.status).to.eq(expectedStatus);
-        cy.log(`${JSON.stringify(response.body)}`);
+          method: "PATCH",
+          url: `https://api.base.stage.dorim.com/v1/drugs/50238/dosages`,
+          headers: {
+            Authorization: "Bearer " + token,
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: {
+            dosages: [
+              {
+                position: 0,
+                inn_id: 1110,
+                measure_unit_id: measure_unit_id,
+                dosage: 1.23123456,
+              },
+            ],
+          },
+        }).then((response) => {
+        cy.log(`Отправленные параметры: ${JSON.stringify(dosages)}`);
+          const expectedStatus = measureUnits.includes(measure_unit_id)
+            ? 204
+            : 400;
+          expect(response.status).to.eq(expectedStatus);
+        });
+        cy.request({
+          method: "GET",
+          url: `https://api.base.stage.dorim.com/v1/drugs/50238`,
+          headers: {
+            Authorization: "Bearer " + token,
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          const expectedStatus = measureUnits.includes(measure_unit_id)
+            ? 200
+            : 400;
+          expect(response.status).to.eq(expectedStatus);
+          cy.log(`${JSON.stringify(response.body)}`);
+        });
       });
     });
-})
   });
 });

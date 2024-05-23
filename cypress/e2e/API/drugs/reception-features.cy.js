@@ -38,6 +38,18 @@ describe("Rec-features", () => {
         custom_text: "123",
       },
       {
+        subject_alias: "children",
+        level: "allowed",
+        minimum_age: 0,
+        minimum_month: 12,
+      },
+      {
+        subject_alias: "children",
+        level: "allowed",
+        minimum_age: 0,
+        minimum_month: 18,
+      },
+      {
         subject_alias: "pregnants",
         level: "allowed",
         minimum_age: 3,
@@ -46,6 +58,11 @@ describe("Rec-features", () => {
         subject_alias: "pregnants",
         level: "forbidden",
         minimum_age: 3,
+      },
+      {
+        subject_alias: "pregnants",
+        level: "allowed",
+        custom_text: "123",
       },
       {
         subject_alias: "pregnants",
@@ -139,7 +156,7 @@ describe("Rec-features", () => {
         method: "PATCH",
         // url: "https://api.base.dev.dorim.com/v1/drugs/41035/reception-features",
         // url: "https://api.base.stage.dorim.com/v1/drugs/41035/reception-features",
-        url: "https://api.base.dorim.com/v1/drugs/41035/reception-features",
+        url: "https://api.base.dorim.com/v1/drugs/56195/reception-features",
         headers: {
           Authorization: "Bearer " + token,
           accept: "application/json",
@@ -149,41 +166,57 @@ describe("Rec-features", () => {
           reception_features: [featureParams],
         },
       }).then((response) => {
+        cy.log(`Отправленные параметры: ${JSON.stringify(featureParams)}`);
         expect(response.status).to.eq(204);
         // expect(response.body)
         //   .to.have.property("reception_features")
         //   .and.to.be.an("array");
         // expect(response.body.reception_features[0]).to.deep.include(featureParams);
-        cy.log(response.body);
       });
     });
   });
   it("Get 4** error", () => {
+    const expectedStatusCodes = [400, 404, 422];
     const token = Cypress.env("access_token");
-    cy.request({
-      failOnStatusCode: false,
-      method: "PATCH",
-      // url: "https://api.base.dev.dorim.com/v1/drugs/41035/reception-features",
-      // url: "https://api.base.stage.dorim.com/v1/drugs/41035/reception-features",
-      url: "https://api.base.dorim.com/v1/drugs/41035/reception-features",
-      headers: {
-        Authorization: "Bearer " + token,
-        accept: "application/json",
-        "Content-Type": "application/json",
+    const incorrectParams = [
+      {
+        subject_alias: "children",
+        minimum_age: 1,
+        minimum_month: "asd",
       },
-      body: {
-        reception_features: [
-          {
-            subject_alias: "adultss",
-            minimum_age: 1,
-            custom_text: "123",
-          },
-        ],
+      {
+        subject_alias: "children",
+        minimum_age: 1,
+        minimum_month: 12,
       },
-    }).then((response) => {
-      expect(response.status).to.eq(422);
-      cy.log(`${JSON.stringify(response.body)}`);
+      {
+        subject_alias: "children",
+        minimum_age: 0,
+        minimum_month: 19,
+      },
+    ];
+    incorrectParams.forEach((incorrectParams) => {
+      cy.request({
+        failOnStatusCode: false,
+        method: "PATCH",
+        // url: "https://api.base.dev.dorim.com/v1/drugs/41035/reception-features",
+        // url: "https://api.base.stage.dorim.com/v1/drugs/41035/reception-features",
+        url: "https://api.base.dorim.com/v1/drugs/56195/reception-features",
+        headers: {
+          Authorization: "Bearer " + token,
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: {
+          reception_features: [incorrectParams],
+        },
+      }).then((response) => {
+        cy.log(`Тело ответа: ${JSON.stringify(response.body)}`);
+        cy.log(`Отправленные параметры: ${JSON.stringify(incorrectParams)}`);
+        console.log(`Тело ответа: ${JSON.stringify(response.body)}`);
+        console.log(`Отправленные параметры: ${JSON.stringify(incorrectParams)}`);
+        expect(expectedStatusCodes).to.include(response.status);
+      })
     });
   });
-  
 });

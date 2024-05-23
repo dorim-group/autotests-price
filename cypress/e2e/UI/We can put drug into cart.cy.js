@@ -56,9 +56,7 @@ describe("Login test", () => {
             '[class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiCard-root css-1ithkil"]',
           ).contains("Ваша корзина пуста"); // Ищем надпись "Ваша корзина пуста"
           cy.wait(1000);
-          cy.get(
-            ":nth-child(2) > .DataGridSubRow > :nth-child(5) > :nth-child(1) > .css-1nxrtzm > .MuiInputBase-root > .MuiInputBase-input", // Фокусируемся на количестве товара
-          )
+          cy.get('input.MuiInputBase-input.css-1jktamo').eq(0) // фокусируемся на инпуте "количество товара" у предложения
             .click()
             .type("1")
             .then(() => {
@@ -72,7 +70,7 @@ describe("Login test", () => {
           // Забираем цену товара, который положили в корзину
           cy.get(
             "p.MuiTypography-root.MuiTypography-inherit.MuiTypography-alignRight.css-f5kvc9",
-          )
+          ).eq(0)
             .invoke("text")
             .then((text) => {
               // Преобразовать текст в числовой формат
@@ -84,14 +82,16 @@ describe("Login test", () => {
         }
       });
 
-    cy.get(
-      '[class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation css-ljjtx2"]',
-    ).click();
+      cy.get('a[href="/search/order-preview"]')
+      .click();
     cy.url().should(async (url) => {
       expect(url).to.contains("/search/order-preview");
     });
+  });
 
+    //Мне нужно начать с того же места, где я остановился. Возможно нужно убрать лишний it, без понятия пока, не получается нормально сделать переход состояния
     // Выбрать все корневые элементы div с указанным классом
+    it("Should perform a search after login2", () => {
     cy.get(
       "div.MuiPaper-root.MuiPaper-outlined.MuiPaper-rounded.MuiCard-root.css-1m0qxbm",
     ).each(($el) => {
@@ -111,7 +111,6 @@ describe("Login test", () => {
           cy.log("Price:", price);
         });
     });
-
-    
   });
+    
 });

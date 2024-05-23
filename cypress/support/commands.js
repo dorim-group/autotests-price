@@ -116,3 +116,27 @@ Cypress.Commands.add("ProdRest", () => {
     Cypress.env('access_token', response.body.access_token);
   });
 });
+
+// Кастомная команда для авторизации на Market Dev
+Cypress.Commands.add("MarketRest", () => {
+  cy.request({
+    method: "POST",
+    url: `${apiUrl}/v1/auth/sign-up`,
+    headers: {
+        // Authorization: "Bearer " + token,
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    body: {
+        "phone": "998948066127",
+        "name": "Qwerty1234"
+      }
+}).then((response) => {
+    expect(response.status).to.eq(200);
+    expect(response.body).to.have.property("token");
+    const token = response.body.token; 
+    expect(token).to.be.a('string');
+    cy.log(`Тело ответа: ${JSON.stringify(token)}`);
+    Cypress.env('OTP_token', token);
+})
+})
