@@ -1,7 +1,7 @@
 //Вынести потом в кастомную команду весь процесс авторизации для последующих тестов
 
 describe("We can get sms-token using phone and name", () => {
-  const apiUrl = Cypress.env("API_DEV_MARKET");
+  const apiUrl = Cypress.env('API_DEV_MARKET');
   it.only("Sign-up", () => {
     cy.request({
       method: "POST",
@@ -12,7 +12,7 @@ describe("We can get sms-token using phone and name", () => {
         "Content-Type": "application/json",
       },
       body: {
-        phone: "998948066127",
+        phone: "998948066125",
         name: "Qwerty1234",
       },
     }).then((response) => {
