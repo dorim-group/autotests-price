@@ -50,6 +50,12 @@ describe("Rec-features", () => {
         minimum_month: 18,
       },
       {
+        subject_alias: "children",
+        level: "allowed",
+        minimum_age: 1,
+        minimum_month: 11,
+      },
+      {
         subject_alias: "pregnants",
         level: "allowed",
         minimum_age: 3,
@@ -168,10 +174,6 @@ describe("Rec-features", () => {
       }).then((response) => {
         cy.log(`Отправленные параметры: ${JSON.stringify(featureParams)}`);
         expect(response.status).to.eq(204);
-        // expect(response.body)
-        //   .to.have.property("reception_features")
-        //   .and.to.be.an("array");
-        // expect(response.body.reception_features[0]).to.deep.include(featureParams);
       });
     });
   });

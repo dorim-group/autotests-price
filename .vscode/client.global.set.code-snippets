@@ -1,0 +1,23 @@
+{
+    "Set Global Token": {
+        "prefix": "setGlobalToken",
+        "body": [
+            "> {%",
+            "client.global.set(\"${1:token}\", response.body.${1:token});",
+            "%}"
+        ],
+        "description": "Set a global token variable"
+    },
+    "Client Test": {
+        "prefix": "clientTest",
+        "body": [
+            "> {%",
+            "client.test(\"${1:Test Name}\", () {",
+            "    const responseJson = JSON.parse(response.body);",
+            "    assert.strictEqual(responseJson.${2:key}, \"${3:expectedValue}\");",
+            "});",
+            "%}"
+        ],
+        "description": "Create a client test block"
+    }
+}

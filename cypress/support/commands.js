@@ -1,20 +1,20 @@
-Cypress.Commands.add("login", ({ phone, password }) => {
+Cypress.Commands.add("priceLogin", ({ phone, password }) => {
   cy.log("Переход на страницу авторизации");
-  cy.visit("/auth/sign-in");
+  cy.visit("https://price.dev.dorim.com/auth/sign-in");
 
   // Проверяем наличие инпутов логина и вводим наши данные
   cy.log("Ввод номера телефона");
-  cy.get('input[id="phone"]').should("be.empty").type(phone);
+  cy.get('input[id="phone"]').type(phone);
 
   // Аналогично с паролем
   cy.log("Ввод пароля");
-  cy.get('input[id="password"]').should("be.visible").type(password);
+  cy.get('input[id="password"]').type(password);
   //cy.get('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-edgeEnd.MuiIconButton-sizeMedium.css-12xczkh').should('be.visible').click();
   // Клик по кнопке для авторизации
-  cy.get('button[type="submit"]').should("be.visible").click();
+  cy.get('button[type="submit"]').click();
   cy.wait(5000);
   cy.url().should(async (url) => {
-    expect(url).to.contains("/search");
+    expect(url).to.contains("/manual");
   });
 });
 

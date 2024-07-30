@@ -1,0 +1,26 @@
+@import http-client.env.json
+
+// изменить какие-либо аптечные данные
+PUT https://{{base}}/v1/contractors/1/pharmacy-data
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "geolocation_latitude": 12.231,
+  "geolocation_longitude": -16.123,
+  "location_description": "За углом",
+  "opening_hours": {
+    "mon2": [
+      {
+        "start": "21:12",
+        "end": "21:29"
+      }
+    ]
+  }
+}
+
+> {%
+client.test("Корректно", function () {
+   client.assert(response.status === 200, `Статус ${response.status}, проверь тест`)
+});
+%}

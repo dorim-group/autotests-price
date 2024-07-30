@@ -1,6 +1,6 @@
 describe("We can generate AgentID and it will be a number and it will be from 1000000000 to 9999999999", () => {
   before(() => {
-    cy.DevRest();
+    cy.ProdRest();
   });
   beforeEach(() => {
     const token = Cypress.env("access_token");
@@ -10,7 +10,7 @@ describe("We can generate AgentID and it will be a number and it will be from 10
         const token = Cypress.env("access_token");
       cy.request({
         method: "GET",
-        url: "https://api.base.dev.dorim.com/v1/agent-id",
+        url: "https://api.base.dorim.com/v1/agent-id",
         headers: {
           Authorization: "Bearer " + token,
           accept: "application/json",

@@ -1,0 +1,65 @@
+@import http-client.env.json
+
+#Авторизация. Окружение можно менять просто по выбору env: dev(stage, prod)
+POST https://{{base}}/v1/auth/sign-in
+Content-Type: application/json
+
+ { "phone": "{{phone}}",
+     "password": "{{password}}"
+  }
+
+
+
+
+> {%
+client.global.set("token", response.body.access_token);
+client.global.set("refresh_token", response.body.refresh_token);
+%}
+
+
+
+# Refresh token
+POST https://{{base}}/v1/auth/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "{{refresh_token}}"
+}
+
+# Проверка на статус = 200
+?? status == 200 
+
+> {%
+client.global.set("token", response.body.access_token);
+%}
+
+# Refresh token. Negative
+POST https://{{base}}/v1/auth/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "string"
+}
+
+?? status == 401
+
+# Logout
+POST https://{{base}}/v1/auth/logout
+Content-Type: application/json
+
+{
+    "refresh_token": "{{refresh_token}}"
+}
+
+?? status == 204
+
+# Logout negative test
+
+POST https://{{base}}/v1/auth/logout
+Content-Type: application/json
+
+{
+    "refresh_token": 1
+}
+
+?? status == 422

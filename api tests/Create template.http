@@ -1,0 +1,45 @@
+@import ../http-client.env.json
+
+// Получаем информацию обо всех шаблонах
+GET https://{{base}}/v1/specification_templates
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+> {%
+client.test("Items exist", function() {
+    client.assert(response.body.hasOwnProperty("items"),
+    "Cannot find 'items' in response");
+});
+%}
+
+// Получаем информацию о шаблоне
+GET https:///{{base}}/v1/specification_templates/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+> {%
+client.test("Items exist", function() {
+    client.assert(response.body.hasOwnProperty("items"),
+    "Cannot find 'items' in response");
+});
+%}
+
+// Создаем шаблон
+POST https://{{base}}/v1/specification_templates
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Template 2",
+  "is_default": false,
+  "start_date": "2024-03-27",
+  "end_date": "2024-10-27",
+  "marketing_org_id": 958
+}
+
+> {%
+client.test("Шаблон успешно создан", function () {
+   client.assert(response.status === 200, `Статус ${response.status}, проверь тест`)
+});
+%}
+

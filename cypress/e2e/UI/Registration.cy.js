@@ -37,7 +37,7 @@ describe("Registration", () => {
   it("should fill in the second step of the registration form", () => {
     // Начнем непосредственно с проверки второго шага регистрации
     cy.get('[class^="MuiInputBase-input MuiOutlinedInput-input"]').each(($input, index) => {
-      cy.wrap($input).type("5"); // Пример заполнения, адаптируйте под ваш кейс
+      cy.wrap($input).type("5"); 
     });
     // Дополнительные проверки после заполнения второго шага
   });
