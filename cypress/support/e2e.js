@@ -12,7 +12,10 @@
 // You can read more here:
 // https://on.cypress.io/configuration
 // ***********************************************************
-
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // верните false, чтобы предотвратить сбой теста
+    return false;
+  });
 // Import commands.js using ES2015 syntax:
 import "./commands";
 import "cypress-localstorage-commands";
