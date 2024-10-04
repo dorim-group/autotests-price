@@ -1,20 +1,23 @@
+import { urls } from "../valid-data/info/validInfo";
+import { signInSelectors } from "../pages/signInPage"
+
 Cypress.Commands.add("priceLogin", ({ phone, password }) => {
   cy.log("Переход на страницу авторизации");
-  cy.visit("https://price.stage.dorim.com/auth/sign-in");
-
+  cy.visit(`${Cypress.env("BASE_URL_PRICE_STAGE")}${urls.signIn}`);
+  cy.get(signInSelectors.checkbox).should('be.checked');
   // Проверяем наличие инпутов логина и вводим наши данные
   cy.log("Ввод номера телефона");
-  cy.get('input[id="phone"]').type(phone);
+  cy.get(signInSelectors.phone).type(phone);
 
   // Аналогично с паролем
   cy.log("Ввод пароля");
-  cy.get('input[id="password"]').type(password);
+  cy.get(signInSelectors.password).type(password);
   cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
   // Клик по кнопке для авторизации
-  cy.get('button[type="submit"]').click();
+  cy.get(signInSelectors.submitBtn).click();
   cy.wait("@signIn").its("response.statusCode").should("eq", 200);
   cy.url().should(async (url) => {
-    expect(url).to.contains("/manual");
+    expect(url).to.contains(urls.productSelectioManual);
   });
 });
 
