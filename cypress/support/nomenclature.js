@@ -37,8 +37,6 @@ class NomenclaturePage {
       };
     });
   };
-  
-  
 
   clearAndConfirmCart() {
     cy.get('[data-testid="view-cart-btn"]').as("viewCart").click(); // Переходим в корзину

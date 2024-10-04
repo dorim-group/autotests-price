@@ -1,6 +1,6 @@
 Cypress.Commands.add("priceLogin", ({ phone, password }) => {
   cy.log("Переход на страницу авторизации");
-  cy.visit("https://price.dev.dorim.com/auth/sign-in");
+  cy.visit("https://price.stage.dorim.com/auth/sign-in");
 
   // Проверяем наличие инпутов логина и вводим наши данные
   cy.log("Ввод номера телефона");
@@ -9,13 +9,17 @@ Cypress.Commands.add("priceLogin", ({ phone, password }) => {
   // Аналогично с паролем
   cy.log("Ввод пароля");
   cy.get('input[id="password"]').type(password);
-  //cy.get('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-edgeEnd.MuiIconButton-sizeMedium.css-12xczkh').should('be.visible').click();
+  cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
   // Клик по кнопке для авторизации
   cy.get('button[type="submit"]').click();
-  cy.wait(5000);
+  cy.wait("@signIn").its("response.statusCode").should("eq", 200);
   cy.url().should(async (url) => {
     expect(url).to.contains("/manual");
   });
+});
+
+Cypress.Commands.add("priceLogout", () => {
+  //
 });
 
 /// Кастомная команда для авторизации на DEV черзе API
@@ -34,7 +38,7 @@ Cypress.Commands.add("DevRest", () => {
   }).then((response) => {
     expect(response.body).to.have.property("access_token");
     // window.localStorage.setItem("access_token", response.body.access_token);
-    Cypress.env('access_token', response.body.access_token);
+    Cypress.env("access_token", response.body.access_token);
   });
 });
 
@@ -54,7 +58,7 @@ Cypress.Commands.add("StageRest", () => {
   }).then((response) => {
     expect(response.body).to.have.property("access_token");
     // window.localStorage.setItem("access_token", response.body.access_token);
-    Cypress.env('access_token', response.body.access_token);
+    Cypress.env("access_token", response.body.access_token);
   });
 });
 
@@ -76,7 +80,6 @@ Cypress.Commands.add("BaseLogin", ({ phone, password }) => {
     expect(url).to.contains("/nomenclature");
   });
 });
-
 
 // Prod
 Cypress.Commands.add("ProdLogin", ({ phone, prodPassword }) => {
@@ -113,7 +116,7 @@ Cypress.Commands.add("ProdRest", () => {
   }).then((response) => {
     expect(response.body).to.have.property("access_token");
     // window.localStorage.setItem("access_token", response.body.access_token);
-    Cypress.env('access_token', response.body.access_token);
+    Cypress.env("access_token", response.body.access_token);
   });
 });
 
@@ -123,20 +126,20 @@ Cypress.Commands.add("MarketRest", () => {
     method: "POST",
     url: `${apiUrl}/v1/auth/sign-up`,
     headers: {
-        // Authorization: "Bearer " + token,
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      // Authorization: "Bearer " + token,
+      accept: "application/json",
+      "Content-Type": "application/json",
+    },
     body: {
-        "phone": "998948066127",
-        "name": "Qwerty1234"
-      }
-}).then((response) => {
+      phone: "998948066127",
+      name: "Qwerty1234",
+    },
+  }).then((response) => {
     expect(response.status).to.eq(200);
     expect(response.body).to.have.property("token");
-    const token = response.body.token; 
-    expect(token).to.be.a('string');
+    const token = response.body.token;
+    expect(token).to.be.a("string");
     cy.log(`Тело ответа: ${JSON.stringify(token)}`);
-    Cypress.env('OTP_token', token);
-})
-})
+    Cypress.env("OTP_token", token);
+  });
+});
