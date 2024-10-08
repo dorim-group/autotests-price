@@ -1,22 +1,57 @@
-Cypress.Commands.add("priceLogin", ({ phone, password }) => {
-  cy.log("Переход на страницу авторизации");
-  cy.visit("https://price.stage.dorim.com/auth/sign-in");
+Cypress.Commands.add(
+  "priceLogin",
+  ({
+    phone,
+    password,
+    blocked_login,
+    blocked_password,
+    incorrect_password,
+    accountStatus = "valid",
+  }) => {
+    cy.log("Переход на страницу авторизации");
+    cy.visit("https://price.stage.dorim.com/auth/sign-in");
 
-  // Проверяем наличие инпутов логина и вводим наши данные
-  cy.log("Ввод номера телефона");
-  cy.get('input[id="phone"]').type(phone);
+    let loginPhone, loginPassword;
 
-  // Аналогично с паролем
-  cy.log("Ввод пароля");
-  cy.get('input[id="password"]').type(password);
-  cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
-  // Клик по кнопке для авторизации
-  cy.get('button[type="submit"]').click();
-  cy.wait("@signIn").its("response.statusCode").should("eq", 200);
-  cy.url().should(async (url) => {
-    expect(url).to.contains("/manual");
-  });
-});
+    // Определяем, какие данные использовать в зависимости от статуса аккаунта
+    if (accountStatus === "valid") {
+      loginPhone = phone;
+      loginPassword = password;
+    } else if (accountStatus === "invalid") {
+      loginPhone = phone;
+      loginPassword = incorrect_password;
+    } else if (accountStatus === "blocked") {
+      loginPhone = blocked_login;
+      loginPassword = blocked_password;
+    } else {
+    }
+
+    // Проверяем наличие инпутов логина и вводим наши данные
+    cy.log("Ввод номера телефона");
+    cy.get('input[id="phone"]').type(loginPhone);
+
+    // Аналогично с паролем
+    cy.log("Ввод пароля");
+    cy.get('input[id="password"]').type(loginPassword);
+    cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
+    // Клик по кнопке для авторизации
+    cy.get('button[type="submit"]').click();
+    if (accountStatus === "valid") {
+      cy.wait("@signIn").its("response.statusCode").should("eq", 200);
+      cy.url().should(async (url) => {
+        expect(url).to.contains("/manual");
+      });
+    } else if (accountStatus === "invalid") {
+      ///
+    } else if (accountStatus === "blocked") {
+      cy.wait("@signIn").its("response.statusCode").should("eq", 403);
+      cy.get('[data-testid="default-error-dlg"]').should(
+        "contain",
+        "Нет доступа Ваша учетная запись заблокирована",
+      );
+    }
+  },
+);
 
 Cypress.Commands.add("priceLogout", () => {
   //
