@@ -1,7 +1,7 @@
 import { urls } from "../valid-data/info/validInfo";
 import { signInSelectors } from "../pages/signInPage"
 
-Cypress.Commands.add("priceLogin", ({ phone, password }) => {
+Cypress.Commands.add("priceLogin", ({ phone, password, expectSuccess=true }) => {
   cy.log("Переход на страницу авторизации");
   cy.visit(`${Cypress.env("BASE_URL_PRICE_STAGE")}${urls.signIn}`);
   cy.get(signInSelectors.checkbox).should('be.checked');
@@ -12,12 +12,17 @@ Cypress.Commands.add("priceLogin", ({ phone, password }) => {
   // Аналогично с паролем
   cy.log("Ввод пароля");
   cy.get(signInSelectors.password).type(password);
-  cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
+  cy.intercept("POST", "/v1/auth/sign-in").as("signIn")
   // Клик по кнопке для авторизации
-  cy.get(signInSelectors.submitBtn).click();
-  cy.wait("@signIn").its("response.statusCode").should("eq", 200);
-  cy.url().should(async (url) => {
-    expect(url).to.contains(urls.productSelectioManual);
+  cy.get(signInSelectors.submitBtn).click()
+  cy.wait("@signIn").then((interception) => {
+    const statusCode = interception.response.statusCode;
+    if (expectSuccess) {
+      expect(statusCode).to.eq(200)
+      cy.url().should('include', urls.productSelectioManual)
+    } else {
+      expect(statusCode).to.eq(401)
+    }
   });
 });
 
