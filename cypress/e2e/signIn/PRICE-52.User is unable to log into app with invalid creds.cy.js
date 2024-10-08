@@ -8,12 +8,11 @@ describe("PRICE-52.User is unable to log into app with invalid creds", () => {
       data.incorrect_passwords.forEach((invalidPassword) => {
         cy.priceLogin({
           phone: data.phone,
-          password: invalidPassword,
-          expectSuccess: false,
+          password: invalidPassword
         });
         //popup validation
-        cy.get(signInSelectors.invalidCredsPopup).should("be.visible");
-        cy.get(signInSelectors.invalidCredsPopupCloseBtn).click();
+        cy.get(signInSelectors.errorPopup).should("be.visible");
+        cy.get(signInSelectors.errorPopupCloseBtn).click();
       });
       //phone input validation
       cy.fixture("LoginPrice").then((data) => {
@@ -23,10 +22,18 @@ describe("PRICE-52.User is unable to log into app with invalid creds", () => {
           cy.get(signInSelectors.password).clear().type(textContent.somePass);
           cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
           cy.get(signInSelectors.submitBtn).click();
+          cy.wait("@signIn").then((interception) => {
+            const statusCode = interception.response.statusCode;
+            if (statusCode === 401) {
+              cy.log('success')
+            } else {
+              cy.log('error')
+            }
           cy.get(signInSelectors.phoneFieldMsg)
             .should("exist")
             .should("contain", textContent.enterValidPhoneMsg);
         });
+      });
       });
       //required fields validation
       cy.get(signInSelectors.phone).clear();

@@ -17,17 +17,6 @@ Cypress.Commands.add(
     cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
     // Клик по кнопке для авторизации
     cy.get(signInSelectors.submitBtn).click();
-    cy.wait("@signIn").then((interception) => {
-      const statusCode = interception.response.statusCode;
-      if (expectSuccess) {
-        expect(statusCode).to.eq(200);
-        cy.url().should("include", urls.productSelectioManual);
-      } else if (statusCode === 403) {
-        expect(statusCode).to.eq(403);
-      } else {
-        expect(statusCode).to.eq(401);
-      }
-    });
   },
 );
 

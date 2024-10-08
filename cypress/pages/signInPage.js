@@ -9,6 +9,6 @@ export const signInSelectors = {
     showPassIcon: '[data-testid="password-visibility-btn"]',
     mainPageBtn: '[data-testid="signin-to-main-page-btn"]',
     resetPassBtn: '[data-testid="signin-reset-password-btn"]',
-    invalidCredsPopup: '[data-testid="default-error-dlg"]',
-    invalidCredsPopupCloseBtn: '[data-testid="default-error-dlg-close-btn"]'
+    errorPopup: '[data-testid="default-error-dlg"]',
+    errorPopupCloseBtn: '[data-testid="default-error-dlg-close-btn"]'
   };

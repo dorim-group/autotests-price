@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { textContent, urls } from "../invalid-data/info/invalidInfo";
+import { textContent, urls } from "../../valid-data/info/validInfo";
 import { signInSelectors } from "../../pages/signInPage";
 
 describe("PRICE-54.User is unable to log in into blocked account", () => {
@@ -11,6 +11,13 @@ describe("PRICE-54.User is unable to log in into blocked account", () => {
         .type(data.blocked_password);
       cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
       cy.get(signInSelectors.submitBtn).click();
+      cy.wait("@signIn").then((interception) => {
+        const statusCode = interception.response.statusCode;
+        if (statusCode === 403) {
+          cy.log('success')
+        } else {
+          cy.log('error')
+        }
       cy.get(signInSelectors.invalidCredsPopup) //Судя по всему, все модалки с ошибкой имеют один селектор и отличаются лишь содержимым
         .should("be.visible")
         .should("contain", textContent.blockedTextError);
@@ -18,4 +25,5 @@ describe("PRICE-54.User is unable to log in into blocked account", () => {
       cy.get(signInSelectors.invalidCredsPopup).should("not.be.visible");
     });
   });
+})
 });

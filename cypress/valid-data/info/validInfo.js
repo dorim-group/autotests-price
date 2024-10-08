@@ -9,4 +9,5 @@ export const textContent = {
     somePass: "SomePassword1",
     enterValidPhoneMsg: "Введите корректный номер телефона",
     requiredField: "Обязательное поле",
+    blockedTextError: "Нет доступа\nВаша учетная запись заблокирована"
 };
