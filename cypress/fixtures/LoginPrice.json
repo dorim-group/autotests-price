@@ -1,6 +1,14 @@
 {
-  "phone": "567568797",
-  "full_login": "998567568797",
+  "phone": "567568797", 
+  "full_login": "998567568797", 
   "password": "Qwerty1234",
-  "incorrect_password": "1234qweASD"
+  "incorrect_passwords": [
+    "1234qweASD",
+    "1234",
+    "!@!#@#@#"
+  ],
+  "incorrect_numbers": [
+    "56756879",
+    "5"
+  ]
 }
