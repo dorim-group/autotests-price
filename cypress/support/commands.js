@@ -45,9 +45,10 @@ Cypress.Commands.add(
       /// заполнить
     } else if (accountStatus === "blocked") {
       cy.wait("@signIn").its("response.statusCode").should("eq", 403);
-      cy.get('[data-testid="default-error-dlg"]').should(
-        "contain",
-        "Нет доступа Ваша учетная запись заблокирована", // Просто ловим модалку и проверяем, что она содержит нужный текст
+      cy.get('[data-testid="default-error-dlg"]')
+      .should(
+        "contain.text",
+        "Нет доступа\nВаша учетная запись заблокирована", // Просто ловим модалку и проверяем, что она содержит нужный текст
       );
     }
   },
