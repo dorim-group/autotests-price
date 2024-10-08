@@ -6,7 +6,7 @@ Cypress.Commands.add(
     blocked_login,
     blocked_password,
     incorrect_password,
-    accountStatus = "valid",
+    accountStatus = "valid", // Основное изменение - добавил статус аккаунта, чтобы было версионирование действий и данных, в зависимости от того, какой статус тестируем
   }) => {
     cy.log("Переход на страницу авторизации");
     cy.visit("https://price.stage.dorim.com/auth/sign-in");
@@ -42,12 +42,12 @@ Cypress.Commands.add(
         expect(url).to.contains("/manual");
       });
     } else if (accountStatus === "invalid") {
-      ///
+      /// заполнить
     } else if (accountStatus === "blocked") {
       cy.wait("@signIn").its("response.statusCode").should("eq", 403);
       cy.get('[data-testid="default-error-dlg"]').should(
         "contain",
-        "Нет доступа Ваша учетная запись заблокирована",
+        "Нет доступа Ваша учетная запись заблокирована", // Просто ловим модалку и проверяем, что она содержит нужный текст
       );
     }
   },
