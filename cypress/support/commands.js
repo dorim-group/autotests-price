@@ -3,7 +3,7 @@ import { signInSelectors } from "../pages/signInPage";
 
 Cypress.Commands.add(
   "priceLogin",
-  ({ phone, password, expectSuccess = true }) => {
+  ({ phone, password }) => {
     cy.log("Переход на страницу авторизации");
     cy.visit(`${Cypress.env("BASE_URL_PRICE_STAGE")}${urls.signIn}`);
     cy.get(signInSelectors.checkbox).should("be.checked");
