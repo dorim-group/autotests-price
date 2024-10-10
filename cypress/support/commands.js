@@ -20,9 +20,16 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add("priceLogout", () => {
-  //
-});
+Cypress.Commands.add("setAuthToken", () => {
+  cy.clearLocalStorage().then(() => {
+  cy.fixture("LoginPrice").then((data) => {
+    const token = data.eternalToken
+    cy.window().then((win) => {
+      win.localStorage.setItem('dorim-price:tokens', `{"access_token":"${token}"}`)
+        });
+  })
+})
+})
 
 /// Кастомная команда для авторизации на DEV черзе API
 Cypress.Commands.add("DevRest", () => {
