@@ -5,8 +5,8 @@ import mainPage, {
 } from "../../pages/product-selection";
 import { textContent, urls } from "../../valid-data/info/validInfo";
 
-describe("PRICE-55.User searches for a product", () => {
-  it("PRICE-55.User searches for a product", () => {
+describe("PRICE-55.User searches for a drug", () => {
+  it("PRICE-55.User searches for a drug", () => {
     cy.setAuthToken();
     const page = new mainPage();
     page.visit();
