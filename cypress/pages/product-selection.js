@@ -5,13 +5,13 @@ class mainPage {
         const baseUrl = Cypress.env('BASE_URL_PRICE_STAGE');
         cy.visit(`${baseUrl}${urls.productSelectioManual}`); 
     }
-    searchProduct(){
+    searchDrug(){
         cy.intercept("GET", "**/v1/drugs/search?has_recommended_promo=false*").as("search")    
-        cy.get(productSelectionSelectors.search).type(textContent.productFullName)
+        cy.get(productSelectionSelectors.search).type(textContent.drugFullName)
         cy.wait('@search').then((interception) => {
             cy.wrap(interception.response?.statusCode).should('eq', 200);
             expect(interception.response?.body?.drugs[0]?.drug?.name).to.exist;
-            cy.wrap(interception.response.body.drugs[0].drug.name).should("eq", textContent.productFullName);
+            cy.wrap(interception.response.body.drugs[0].drug.name).should("eq", textContent.drugFullName);
             cy.wrap(interception.response.body.drugs[0].maker.name).should("eq", "auto_test текст для автоматизации поиска");
         });
     }

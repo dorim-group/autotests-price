@@ -10,9 +10,9 @@ export const textContent = {
     enterValidPhoneMsg: "Введите корректный номер телефона",
     requiredField: "Обязательное поле",
     blockedTextError: "Нет доступа\nВаша учетная запись заблокирована",
-    productFullName: "auto_test_product",
-    foundProductText: 'Найдено 1 позиция',
-    productFullNameMeasuring: 'auto_test_product 1000 + test №100',
+    drugFullName: "auto_test_product",
+    foundDrugText: 'Найдено 1 позиция',
+    drugFullNameMeasuring: 'auto_test_product 1000 + test №100',
     makerName: 'auto_test текст для автоматизации поиска (Украина)',
-    productNameCut: 'test_product',
+    drugNameCut: 'test_product',
 };
