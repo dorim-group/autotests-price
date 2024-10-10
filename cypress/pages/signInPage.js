@@ -10,5 +10,7 @@ export const signInSelectors = {
     mainPageBtn: '[data-testid="signin-to-main-page-btn"]',
     resetPassBtn: '[data-testid="signin-reset-password-btn"]',
     errorPopup: '[data-testid="default-error-dlg"]',
-    errorPopupCloseBtn: '[data-testid="default-error-dlg-close-btn"]'
+    errorPopupCloseBtn: '[data-testid="default-error-dlg-close-btn"]',
+    profileBtn: '[data-testid="header-profile-info"]',
+    signOutBtn: '[data-testid="signout-btn"]'
   };

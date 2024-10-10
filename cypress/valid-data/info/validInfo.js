@@ -9,5 +9,10 @@ export const textContent = {
     somePass: "SomePassword1",
     enterValidPhoneMsg: "Введите корректный номер телефона",
     requiredField: "Обязательное поле",
-    blockedTextError: "Нет доступа\nВаша учетная запись заблокирована"
+    blockedTextError: "Нет доступа\nВаша учетная запись заблокирована",
+    productFullName: "auto_test_product",
+    foundProductText: 'Найдено 1 позиция',
+    productFullNameMeasuring: 'auto_test_product 1000 + test №100',
+    makerName: 'auto_test текст для автоматизации поиска (Украина)',
+    productNameCut: 'test_product',
 };
