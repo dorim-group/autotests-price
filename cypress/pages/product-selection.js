@@ -23,6 +23,37 @@ class mainPage {
             .find('button').eq(number) 
             .should('exist').click()
     }
+    addToCart(item){
+        cy.intercept("POST", "**/v1/cart/992/items*").as("addToCart")
+        cy.get(productSelectionSelectors.increaseItemBtn).eq(item).click()
+        cy.wait('@addToCart').then((interception) => {
+            const response = interception.response.body;
+
+            expect(response).to.have.property('items').and.to.be.an('array');
+            expect(response.items.length).to.be.greaterThan(0);
+            expect(response.items[0]).to.have.property('quantity', 1);
+            expect(response.items[0]).to.have.property('payment_type', '100_0');
+        })
+    }
+    deleteAllFromCartApi(){
+        cy.fixture('loginPrice').then((data) => {
+            const token = data.eternalToken;  
+          
+            cy.request({
+              method: 'DELETE',
+              url: 'https://api.price.stage.dorim.com/v1/cart/992/all-items',
+              headers: {
+                'Authorization': `Bearer ${token}`, 
+                'Connection': 'keep-alive',
+                'Origin': 'https://price.stage.dorim.com',
+                'Referer': 'https://price.stage.dorim.com/',
+              },
+              failOnStatusCode: false
+            }).then((response) => {
+              expect(response.status).to.eq(200); 
+            });
+          });
+    }
 }
 export const productSelectionSelectors = {
     search:'[name="search"]',
@@ -33,6 +64,7 @@ export const productSelectionSelectors = {
     alphabetSearchBtn: '[data-testid="alphabetical-index-btn"]',
     alphabetLetters: '[data-testid="alphabetical-index-letters-block"]',
     offersGrid: '[data-testid="offers-grid-row"]',
+    increaseItemBtn: '[data-testid="cart-counter-increase-btn"]'
 
 }
 export default mainPage;
