@@ -12,3 +12,17 @@ workflows:
               only:
                 - ci/cd
           cypress-command: npx cypress run --headless
+
+
+# jobs:
+#   cypress_run:
+#     docker:
+#       - image: cypress/base:10
+#     working_directory: ~/repo
+#     steps:
+#       - cypress/install
+#       - cypress/run-tests:
+#           cypress-command: npx cypress run --headless
+#           working-directory: ./cypress
+#       - store_test_results:
+
