@@ -14,8 +14,8 @@ workflows:
 
 jobs:
   cypress_run:
-    docker:
-      - image: cypress/default
+    executor:
+      name: cypress/default
     steps:
       - cypress/install:
           cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "package.json" }}
