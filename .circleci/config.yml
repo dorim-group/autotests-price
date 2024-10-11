@@ -5,12 +5,21 @@ orbs:
 
 workflows:
   test:
-    jobs:
-      - cypress/run:
-          filters:
-            branches:
-              only:
-                - ci/cd
-          cypress-command: npx cypress run --headless
-          working-directory: .
+    cypress_run:
+      filter:
+        branches:
+          only:
+            - ci/cd
 
+jobs:
+  cypress_run:
+    docker:
+      - image: cypress/base:10
+    working_directory: .
+    steps:
+      - cypress/install
+      - cypress/run-tests:
+          cypress-command: npx cypress run --headless
+          working-directory: ./cypress
+      - store_test_results:
+          path: test_results/cypress
