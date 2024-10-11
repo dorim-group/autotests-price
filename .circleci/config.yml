@@ -5,11 +5,12 @@ orbs:
 
 workflows:
   test:
-    cypress_run:
-      filter:
-        branches:
-          only:
-            - ci/cd
+    jobs:
+      - cypress_run:
+          filter:
+            branches:
+              only:
+                - ci/cd
 
 jobs:
   cypress_run:
