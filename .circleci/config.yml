@@ -15,8 +15,9 @@ jobs:
     working_directory: ~/repo
     steps:
       - cypress/install:
-          cypress-cache-key: npm-deps-{{ checksum "package.json" }}
+          cypress-cache-key: deps-{{ checksum "package.json" }}
           cypress-cache-path: ~/.cache/Cypress
+          node-cache-version: v2
       - cypress/run-tests:
           cypress-command: npx cypress run --headless
           working-directory: .
