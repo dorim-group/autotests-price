@@ -27,7 +27,7 @@ jobs:
           package-manager: npm
           post-install: ''
       - cypress/run-tests:
-          cypress-command: npx cypress run --headless
+          cypress-command: npx cypress run --headless --reporter cypress-circleci-reporter
           working-directory: .
       - store_test_results:
           path: test_results/cypress
