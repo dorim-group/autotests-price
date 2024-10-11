@@ -16,7 +16,7 @@ jobs:
   cypress_run:
     docker:
       - image: cypress/base:10
-    working_directory: .
+    working_directory: ./repo
     steps:
       - cypress/install
       - cypress/run-tests:
