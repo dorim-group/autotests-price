@@ -12,7 +12,7 @@ workflows:
               only:
                 - ci/cd
           cypress-command: npx cypress run --headless
-          working-directory: ./cypress
+          working-directory: .
 
 
 # jobs:
