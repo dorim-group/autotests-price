@@ -7,7 +7,7 @@ workflows:
   test:
     jobs:
       - cypress_run:
-          filter:
+          filters:
             branches:
               only:
                 - ci/cd
