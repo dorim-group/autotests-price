@@ -1,0 +1,14 @@
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@3.4.0
+
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          filters:
+            branches:
+              only:
+                - ci/cd
+          cypress-command: npx cypress run --headless

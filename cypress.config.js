@@ -24,5 +24,6 @@ module.exports = defineConfig({
     requestTimeout: 10000,
     responseTimeout: 20000,
     taskTimeout: 20000,
+    excludeSpecPattern: "**/old",
   },
 });
