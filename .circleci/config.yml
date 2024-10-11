@@ -17,9 +17,17 @@ jobs:
     docker:
       - image: cypress/base:10
     steps:
-      - cypress/install
+      - cypress/install:
+          cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "package.json" }}
+          cypress-cache-path: ~/.cache/Cypress
+          include-branch-in-node-cache-key: false
+          install-browsers: false
+          install-command: ''
+          node-cache-version: v1
+          package-manager: npm
+          post-install: ''
       - cypress/run-tests:
           cypress-command: npx cypress run --headless
-          working-directory: ./cypress
+          working-directory: .
       - store_test_results:
           path: test_results/cypress
