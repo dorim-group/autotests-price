@@ -14,7 +14,8 @@ jobs:
       - image: cypress/base:10
     working_directory: ~/repo
     steps:
-      - cypress/install
+      - cypress/install:
+          cypress-cache-key: npm-deps-{{ checksum "package.json" }}
       - cypress/run-tests:
           cypress-command: npx cypress run --headless
           working-directory: .
