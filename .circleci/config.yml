@@ -59,6 +59,10 @@ commands:
         description: failure message
         type: string
         default: ":red_circle: [${CIRCLE_BRANCH}] ${CIRCLE_JOB} job has failed! - ${CIRCLE_BUILD_URL}"
+      filename:
+        description: filename
+        type: string
+        default: output.txt
     steps:
       - run:
           command: |
