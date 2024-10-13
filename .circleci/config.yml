@@ -47,7 +47,7 @@ commands:
       webhook_url:
         description: "discord channel webhook url"
         type: string
-        default: ${DISCORD_WEBHOOK_URL}
+        default: ${DISCORD_WEBHOOK}
       username:
         type: string
         default: CircleCI
