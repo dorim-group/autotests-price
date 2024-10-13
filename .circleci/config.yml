@@ -10,7 +10,7 @@ workflows:
           filters:
             branches:
               only:
-                - ci/cd
+                - main
           context:
             - aws-stage
             - github-stage
