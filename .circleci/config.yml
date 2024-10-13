@@ -30,13 +30,13 @@ jobs:
           package-manager: npm
           post-install: ''
       - cypress/run-tests:
-          cypress-command: npx cypress run --headless --reporter cypress-circleci-reporter | tee ./output.txt
+          cypress-command: npx cypress run --headless --reporter cypress-circleci-reporter
           working-directory: .
       - store_test_results:
           path: test_results/cypress
       - notify:
           success_message: ":green_circle: Cypress tests passed on panel-price! ${CIRCLE_BUILD_URL}"
-          filename: output.txt
+          filename: results.json
           failure_message: ":red_circle: Cypress tests failed on panel-price! ${CIRCLE_BUILD_URL}"
 
 
