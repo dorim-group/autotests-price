@@ -11,6 +11,9 @@ workflows:
             branches:
               only:
                 - ci/cd
+          context:
+            - aws-stage
+            - github-stage
 
 jobs:
   cypress_run:
@@ -27,7 +30,58 @@ jobs:
           package-manager: npm
           post-install: ''
       - cypress/run-tests:
-          cypress-command: npx cypress run --headless --reporter cypress-circleci-reporter
+          cypress-command: npx cypress run --headless --reporter cypress-circleci-reporter | tee ./output.txt
           working-directory: .
       - store_test_results:
           path: test_results/cypress
+      - notify:
+          success_message: ":green_circle: Cypress tests passed on panel-price! ${CIRCLE_BUILD_URL}"
+          filename: output.txt
+          failure_message: ":red_circle: Cypress tests failed on panel-price! ${CIRCLE_BUILD_URL}"
+
+
+commands:
+  notify:
+    description: notify
+    parameters:
+      webhook_url:
+        description: "discord channel webhook url"
+        type: string
+        default: ${DISCORD_WEBHOOK_URL}
+      username:
+        type: string
+        default: CircleCI
+      success_message:
+        default: ":green_circle: [${CIRCLE_BRANCH}] ${CIRCLE_JOB} job has succeeded! - ${CIRCLE_BUILD_URL}"
+        type: string
+        description: success message
+      failure_message:
+        description: failure message
+        type: string
+        default: ":red_circle: [${CIRCLE_BRANCH}] ${CIRCLE_JOB} job has failed! - ${CIRCLE_BUILD_URL}"
+    steps:
+      - run:
+          command: |
+            echo 'export DISCORD_BUILD_STATUS="success"' >> $BASH_ENV
+          name: set failure condition
+          when: on_success
+      - run:
+          command: |
+            echo 'export DISCORD_BUILD_STATUS="fail"' >> $BASH_ENV
+          name: set failure condition
+          when: on_fail
+      - run: 
+          name: "Notify to Discord"
+          command: |
+            if [ -z "<< parameters.webhook_url >>"] ; then
+              echo "No discrod webhook url set"
+              echo "Please input your DISCORD_WEBHOOK_URL value"
+              exit 1
+            fi
+
+            if [ "$DISCORD_BUILD_STATUS" = "success" ]; then
+              curl -H 'Content-type: multipart/form-data' -XPOST --form "payload_json={\"embeds\": [{ \"color\": 1363733, \"title\": \"Circle CI\", \"description\": \"<< parameters.success_message >>\"}]}" --form "file=@<< parameters.filename >>" "<< parameters.webhook_url >>";
+            else
+              curl -H 'Content-type: multipart/form-data' -XPOST --form "payload_json={\"embeds\": [{ \"color\": 16081506, \"title\": \"Circle CI\", \"description\": \"<< parameters.failure_message >>\"}]}" --form "file=@<< parameters.filename >>" "<< parameters.webhook_url >>";
+            fi
+          when: always
