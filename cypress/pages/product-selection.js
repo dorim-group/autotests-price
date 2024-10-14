@@ -24,7 +24,7 @@ class mainPage {
             .should('exist').click()
     }
     addToCart(item){
-        cy.intercept("POST", "**/v1/cart/992/items*").as("addToCart")
+        cy.intercept("POST", "**/v1/cart/*/items*").as("addToCart")
         cy.get(productSelectionSelectors.increaseItemBtn).eq(item).click()
         cy.wait('@addToCart').then((interception) => {
             const response = interception.response.body;
@@ -41,7 +41,7 @@ class mainPage {
           
             cy.request({
               method: 'DELETE',
-              url: 'https://api.price.stage.dorim.com/v1/cart/992/all-items',
+              url: 'https://api.price.stage.dorim.com/v1/cart/1091/all-items',
               headers: {
                 'Authorization': `Bearer ${token}`, 
                 'Connection': 'keep-alive',
