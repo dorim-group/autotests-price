@@ -19,7 +19,7 @@ workflows:
           filters:
             branches:
               only:
-                - << parameters.git-branch >>
+                - << pipeline.parameters.git-branch >>
           context:
             - aws-stage
             - github-stage
@@ -28,7 +28,7 @@ jobs:
   cypress_run:
     docker:
       - image: cypress/node:18.16.1
-      - image: << parameters.docker_image >>
+      - image: << pipeline.parameters.docker_image >>
         aws_auth:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
