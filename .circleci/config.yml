@@ -3,6 +3,15 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@3.4.0
 
+
+parameters:
+  docker_image:
+    type: string
+    default: test
+  git-branch:
+    type: string
+    default: non-existing-branch
+
 workflows:
   test:
     jobs:
@@ -10,15 +19,19 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - << parameters.git-branch >>
           context:
             - aws-stage
             - github-stage
 
 jobs:
   cypress_run:
-    executor:
-      name: cypress/default
+    docker:
+      - image: cypress/node:18.16.1
+      - image: << parameters.docker_image >>
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     steps:
       - cypress/install:
           cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "package.json" }}
