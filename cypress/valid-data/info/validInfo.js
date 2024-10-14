@@ -15,4 +15,7 @@ export const textContent = {
     drugFullNameMeasuring: 'auto_test_product 1000 + test №100',
     makerName: 'auto_test текст для автоматизации поиска (Украина)',
     drugNameCut: 'test_product',
+    cartIsEmpty: 'Ваша корзина пуста',
+    cartisCleared: 'Корзина была очищенна',
+    cartEmptyStateText: 'Нет записей для отображения',
 };
