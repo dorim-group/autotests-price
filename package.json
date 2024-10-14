@@ -3,8 +3,8 @@
     "@faker-js/faker": "^8.4.1",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "cypress": "^13.15.0",
     "cypress-file-upload": "^5.0.8",
+    "cypress-grep": "^3.0.4",
     "cypress-iframe": "^1.0.1",
     "prettier": "3.0.3"
   },
