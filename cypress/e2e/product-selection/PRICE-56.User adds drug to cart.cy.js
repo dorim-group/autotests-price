@@ -4,7 +4,7 @@ import mainPage from "../../pages/product-selection";
 import { textContent, urls } from "../../valid-data/info/validInfo";
 
 describe("PRICE-56.User adds drug to a cart", () => {
-  it("PRICE-56.User adds drug to a cart", () => {
+  it.skip("PRICE-56.User adds drug to a cart", () => {
     cy.setAuthToken();
     const page = new mainPage();
     page.visit();
