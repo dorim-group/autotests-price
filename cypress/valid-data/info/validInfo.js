@@ -3,6 +3,7 @@ export const urls = {
     productSelectioManual: "/product-selection/manual",
     productSelectioAuto: "/product-selection/auto",
     productSelectioSpecialOffers: "/product-selection/special-offers",
+    productSelectioCheckoutPage: "/product-selection/order/checkout",
     signIn: "/auth/sign-in",
 };
 export const textContent = {
