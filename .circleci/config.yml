@@ -26,8 +26,9 @@ workflows:
 
 jobs:
   cypress_run:
+    executor:
+      - cypress/default
     docker:
-      - image: cimg/node:18.16.1
       - image: << pipeline.parameters.docker_image >>
         aws_auth:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
