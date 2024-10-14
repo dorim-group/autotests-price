@@ -4,7 +4,7 @@ import { urls } from "../../valid-data/info/validInfo";
 import common from "../../pages/index"
 
 describe("PRICE-51.User is able to log into app", () => {
-  it("PRICE-51.User is able to log into app", () => {
+  it("PRICE-51.User is able to log into app", { tags: ["stage"] },() => {
     cy.fixture("LoginPrice").then((data) => {
       cy.priceLogin({
         phone: data.phone,

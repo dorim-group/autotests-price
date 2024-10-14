@@ -2,7 +2,7 @@
 import { textContent, urls } from "../../valid-data/info/validInfo";
 import { signInSelectors } from "../../pages/signInPage";
 
-describe("PRICE-54.User is unable to log in into blocked account", () => {
+describe("PRICE-54.User is unable to log in into blocked account", { tags: ["stage"] },() => {
   it("PRICE-54.User is unable to log in into blocked account", () => {
     cy.fixture("LoginPrice").then((data) => {
       cy.visit(`${Cypress.env("BASE_URL_PRICE_STAGE")}${urls.signIn}`);
