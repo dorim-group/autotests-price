@@ -11,7 +11,6 @@ describe("PRICE-59.User confirms-and-check-order", () => {
     page.searchDrug();
     page.deleteAllFromCartApi();
     page.addToCart(0);
-    cy.get('[data-testid="view-checkout-btn"]').click()
-    
-  })
-})
+    cy.get('[data-testid="view-checkout-btn"]').click();
+  });
+});
