@@ -3,7 +3,7 @@ import { cartSelectors } from "../../pages/cart";
 import mainPage from "../../pages/product-selection";
 import { textContent, urls } from "../../valid-data/info/validInfo";
 
-describe("PRICE-59.User confirms-and-check-order", () => {
+describe("PRICE-59.User confirms-and-check-order", { tags: ["stage"] }, () => {
   it("PRICE-59.User confirms-and-check-order", () => {
     cy.setAuthToken();
     const page = new mainPage();
