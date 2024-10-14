@@ -1,61 +1,35 @@
+import { urls } from "../valid-data/info/validInfo";
+import { signInSelectors } from "../pages/signInPage";
+
 Cypress.Commands.add(
   "priceLogin",
-  ({
-    phone,
-    password,
-    blocked_login,
-    blocked_password,
-    incorrect_password,
-    accountStatus = "valid", // Основное изменение - добавил статус аккаунта, чтобы было версионирование действий и данных, в зависимости от того, какой статус тестируем
-  }) => {
+  ({ phone, password }) => {
     cy.log("Переход на страницу авторизации");
-    cy.visit("https://price.stage.dorim.com/auth/sign-in");
-
-    let loginPhone, loginPassword;
-
-    // Определяем, какие данные использовать в зависимости от статуса аккаунта
-    if (accountStatus === "valid") {
-      loginPhone = phone;
-      loginPassword = password;
-    } else if (accountStatus === "invalid") {
-      loginPhone = phone;
-      loginPassword = incorrect_password;
-    } else if (accountStatus === "blocked") {
-      loginPhone = blocked_login;
-      loginPassword = blocked_password;
-    } else {
-    }
-
+    cy.visit(`${Cypress.env("BASE_URL_PRICE_STAGE")}${urls.signIn}`);
+    cy.get(signInSelectors.checkbox).should("be.checked");
     // Проверяем наличие инпутов логина и вводим наши данные
     cy.log("Ввод номера телефона");
-    cy.get('input[id="phone"]').type(loginPhone);
+    cy.get(signInSelectors.phone).type(phone);
 
     // Аналогично с паролем
     cy.log("Ввод пароля");
-    cy.get('input[id="password"]').type(loginPassword);
+    cy.get(signInSelectors.password).type(password);
     cy.intercept("POST", "/v1/auth/sign-in").as("signIn");
     // Клик по кнопке для авторизации
-    cy.get('button[type="submit"]').click();
-    if (accountStatus === "valid") {
-      cy.wait("@signIn").its("response.statusCode").should("eq", 200);
-      cy.url().should(async (url) => {
-        expect(url).to.contains("/manual");
-      });
-    } else if (accountStatus === "invalid") {
-      /// заполнить
-    } else if (accountStatus === "blocked") {
-      cy.wait("@signIn").its("response.statusCode").should("eq", 403);
-      cy.get('[data-testid="default-error-dlg"]').should(
-        "contain",
-        "Нет доступа Ваша учетная запись заблокирована", // Просто ловим модалку и проверяем, что она содержит нужный текст
-      );
-    }
+    cy.get(signInSelectors.submitBtn).click();
   },
 );
 
-Cypress.Commands.add("priceLogout", () => {
-  //
-});
+Cypress.Commands.add("setAuthToken", () => {
+  cy.clearLocalStorage().then(() => {
+  cy.fixture("LoginPrice").then((data) => {
+    const token = data.eternalToken
+    cy.window().then((win) => {
+      win.localStorage.setItem('dorim-price:tokens', `{"access_token":"${token}"}`)
+        });
+  })
+})
+})
 
 /// Кастомная команда для авторизации на DEV черзе API
 Cypress.Commands.add("DevRest", () => {

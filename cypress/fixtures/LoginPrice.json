@@ -1,19 +1,6 @@
 {
-  "valid": {
-    "phone": "567568797",
-    "full_login": "998567568797",
-    "password": "Qwerty1234",
-    "accountStatus": "valid"
-  },
-  "invalid": {
-    "phone": "567568797",
-    "full_login": "998567568797",
-    "incorrect_password": "1234qweASD",
-    "accountStatus": "invalid"
-  },
-  "blocked": {
-    "blocked_login": "998734565534",
-    "blocked_password": "Qwerty1234",
-    "accountStatus": "blocked"
-  }
+  "phone": "567568797",
+  "full_login": "998567568797",
+  "password": "Qwerty1234",
+  "incorrect_password": "1234qweASD"
 }

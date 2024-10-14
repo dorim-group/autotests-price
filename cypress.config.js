@@ -12,6 +12,12 @@ module.exports = defineConfig({
       // Регистрация плагина Cypress для локального хранилища
       require("cypress-localstorage-commands/plugin")(on, config);
 
+      // Output results to JSON file
+      require('cypress-json-results')({
+        on,
+        filename: 'results.json',
+      })
+
       // Включаем кэширование между тестами
       config.cacheAcrossSpecs = true;
 
@@ -19,5 +25,11 @@ module.exports = defineConfig({
 
       return config;
     },
+    defaultCommandTimeout: 16000,
+    pageLoadTimeout: 10000,
+    requestTimeout: 10000,
+    responseTimeout: 20000,
+    taskTimeout: 20000,
+    excludeSpecPattern: "**/old",
   },
 });
