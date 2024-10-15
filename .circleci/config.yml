@@ -13,10 +13,10 @@ parameters:
     default: default
 
 workflows:
-  when:
-    not:
-      equal: [<< pipeline.parameters.git-branch >>, default]
   test:
+    when:
+      not:
+        equal: [<< pipeline.parameters.git-branch >>, default]
     jobs:
       - cypress_run:
           filters:
