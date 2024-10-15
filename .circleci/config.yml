@@ -13,7 +13,9 @@ parameters:
     default: default
 
 workflows:
-  when: << pipeline.parameters.git-branch >> != default
+  when:
+    not:
+      equal: [<< pipeline.parameters.git-branch >>, default]
   test:
     jobs:
       - cypress_run:
