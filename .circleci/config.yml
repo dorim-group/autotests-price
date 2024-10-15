@@ -3,7 +3,17 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@3.4.0
 
+
+parameters:
+  docker_image:
+    type: string
+    default: test
+  git-branch:
+    type: string
+    default: default
+
 workflows:
+  when: << pipeline.parameters.git-branch >> != default
   test:
     jobs:
       - cypress_run:
@@ -12,13 +22,17 @@ workflows:
               only:
                 - main
           context:
-            - aws-stage
-            - github-stage
+            - aws-<< pipeline.parameters.git-branch >>
+            - github-<< pipeline.parameters.git-branch >>
 
 jobs:
   cypress_run:
-    executor:
-      name: cypress/default
+    docker:
+      - image: cimg/node:18.16.1-browsers
+      - image: << pipeline.parameters.docker_image >>
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     steps:
       - cypress/install:
           cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "package.json" }}
@@ -30,14 +44,14 @@ jobs:
           package-manager: npm
           post-install: ''
       - cypress/run-tests:
-          cypress-command: npx cypress run --headless --reporter cypress-circleci-reporter
+          cypress-command: npm run test:<< pipeline.parameters.git-branch >>-ci
           working-directory: .
       - store_test_results:
           path: test_results/cypress
       - notify:
-          success_message: ":green_circle: Cypress tests passed on panel-price! ${CIRCLE_BUILD_URL}"
+          success_message: ":green_circle: Cypress tests passed on panel-price << pipeline.parameters.git-branch >>! ${CIRCLE_BUILD_URL}"
           filename: results.json
-          failure_message: ":red_circle: Cypress tests failed on panel-price! ${CIRCLE_BUILD_URL}"
+          failure_message: ":red_circle: Cypress tests failed on panel-price << pipeline.parameters.git-branch >>! ${CIRCLE_BUILD_URL}"
 
 
 commands:
