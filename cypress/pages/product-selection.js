@@ -1,8 +1,8 @@
 import { textContent, urls } from "../valid-data/info/validInfo";
 
-class mainPage {
+class productSelectionPage {
   visit() {
-    const baseUrl = Cypress.env("BASE_URL_PRICE_STAGE");
+    const baseUrl = Cypress.env("BASE_URL_PRICE");
     cy.visit(`${baseUrl}${urls.productSelectioManual}`);
   }
   searchDrug() {
@@ -47,39 +47,39 @@ class mainPage {
     });
   }
   deleteAllFromCartApi() {
-    cy.fixture("loginPrice").then((data) => {
-      const token = data.eternalToken;
+    const token = Cypress.env("eternalToken");
+    const apiPrice = Cypress.env("API_PRICE");
+    const origin = Cypress.env("BASE_URL_PRICE");
+
+    cy.request({
+      method: "POST",
+      url: `${apiPrice}/v1/cart/get-update`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Connection: "keep-alive",
+        Origin: origin,
+        Referer: `${origin}`,
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+
+      const cartId = response.body.cart_id;
+
+      cy.log(`айди корзины выводим для понимания: ${cartId}`);
 
       cy.request({
-        method: "POST",
-        url: "https://api.price.stage.dorim.com/v1/cart/get-update",
+        method: "DELETE",
+        url: `${apiPrice}/v1/cart/${cartId}/all-items`,
         headers: {
           Authorization: `Bearer ${token}`,
           Connection: "keep-alive",
-          Origin: "https://price.stage.dorim.com",
-          Referer: "https://price.stage.dorim.com/",
+          Origin: origin,
+          Referer: `${origin}`,
         },
         failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(200);
-
-        const cartId = response.body.cart_id;
-
-        cy.log(`айди корзины выводим для понимания: ${cartId}`);
-
-        cy.request({
-          method: "DELETE",
-          url: `https://api.price.stage.dorim.com/v1/cart/${cartId}/all-items`,
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Connection: "keep-alive",
-            Origin: "https://price.stage.dorim.com",
-            Referer: "https://price.stage.dorim.com/",
-          },
-          failOnStatusCode: false,
-        }).then((deleteResponse) => {
-          expect(deleteResponse.status).to.eq(200);
-        });
+      }).then((deleteResponse) => {
+        expect(deleteResponse.status).to.eq(200);
       });
     });
   }
@@ -95,4 +95,4 @@ export const productSelectionSelectors = {
   offersGrid: '[data-testid="offers-grid-row"]',
   increaseItemBtn: '[data-testid="cart-counter-increase-btn"]',
 };
-export default mainPage;
+export default productSelectionPage;

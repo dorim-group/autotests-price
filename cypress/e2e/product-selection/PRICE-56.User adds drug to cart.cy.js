@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 import { cartSelectors } from "../../pages/cart";
-import mainPage from "../../pages/product-selection";
+import productSelectionPage from "../../pages/product-selection";
 import { textContent, urls } from "../../valid-data/info/validInfo";
 
 describe("PRICE-56.User adds drug to a cart", () => {
-  it("PRICE-56.User adds drug to a cart", { tags: ["stage"] },() => {
+  it("PRICE-56.User adds drug to a cart", { tags: ["dev","stage"] },() => {
     cy.setAuthToken();
-    const page = new mainPage();
+    const page = new productSelectionPage();
     page.visit();
     cy.url().should("include", urls.productSelectioManual);
     page.searchDrug();
