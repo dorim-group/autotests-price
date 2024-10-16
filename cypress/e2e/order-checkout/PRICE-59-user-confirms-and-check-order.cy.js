@@ -1,9 +1,7 @@
 /// <reference types="cypress" />
-import { cartSelectors } from "../../pages/cart";
 import productSelectionPage from "../../pages/product-selection";
-import { textContent, urls } from "../../valid-data/info/validInfo";
 
-describe("PRICE-59.User confirms-and-check-order", { tags: ["dev", "stage"] }, () => {
+describe("PRICE-59.User confirms-and-check-order", { tags: ["dev", "stage", "prod"] }, () => {
   let page;
   after(() => {
     page.deleteAllFromCartApi()

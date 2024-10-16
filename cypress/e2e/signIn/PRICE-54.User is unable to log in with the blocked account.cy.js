@@ -4,7 +4,7 @@ import { signInSelectors } from "../../pages/signInPage";
 
 describe(
   "PRICE-54.User is unable to log in into blocked account",
-  { tags: ["dev", "stage"] },
+  { tags: ["dev", "stage", "prod"] },
   () => {
     it("PRICE-54.User is unable to log in into blocked account", () => {
       const blockedPhone = Cypress.env("blocked_phone");

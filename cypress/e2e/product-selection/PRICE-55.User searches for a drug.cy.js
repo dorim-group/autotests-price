@@ -6,7 +6,7 @@ import productSelectionPage, {
 import { textContent, urls } from "../../valid-data/info/validInfo";
 
 describe("PRICE-55.User searches for a drug", () => {
-  it("PRICE-55.User searches for a drug", { tags: ["dev","stage"] },() => {
+  it("PRICE-55.User searches for a drug", { tags: ["dev","stage", "prod"] },() => {
     cy.setAuthToken();
     const page = new productSelectionPage();
     page.visit();

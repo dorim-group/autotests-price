@@ -6,7 +6,7 @@ import common from "../../pages/index";
 describe("PRICE-51.User is able to log into app", () => {
   it(
     "PRICE-51.User is able to log into app",
-    { tags: ["dev", "stage"] },
+    { tags: ["dev", "stage", "prod"] },
     () => {
       cy.priceLogin({
         phone: Cypress.env("phone"),

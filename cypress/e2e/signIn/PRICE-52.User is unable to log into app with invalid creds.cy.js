@@ -5,7 +5,7 @@ import { signInSelectors } from "../../pages/signInPage";
 describe("PRICE-52.User is unable to log into app with invalid creds", () => {
   it(
     "PRICE-52.User is unable to log into app with invalid creds",
-    { tags: ["dev", "stage"] },
+    { tags: ["dev", "stage", "prod"] },
     () => {
       const phone = Cypress.env("phone");
       const validPassword = Cypress.env("password");

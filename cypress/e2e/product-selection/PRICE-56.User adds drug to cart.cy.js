@@ -4,7 +4,7 @@ import productSelectionPage from "../../pages/product-selection";
 import { textContent, urls } from "../../valid-data/info/validInfo";
 
 describe("PRICE-56.User adds drug to a cart", () => {
-  it("PRICE-56.User adds drug to a cart", { tags: ["dev","stage"] },() => {
+  it("PRICE-56.User adds drug to a cart", { tags: ["dev","stage", "prod"] },() => {
     cy.setAuthToken();
     const page = new productSelectionPage();
     page.visit();
