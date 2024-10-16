@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
 import common from "../../pages/index";
-import mainPage, {
+import productSelectionPage, {
   productSelectionSelectors,
 } from "../../pages/product-selection";
 import { textContent, urls } from "../../valid-data/info/validInfo";
 
 describe("PRICE-55.User searches for a drug", () => {
-  it("PRICE-55.User searches for a drug", () => {
+  it("PRICE-55.User searches for a drug", { tags: ["dev","stage"] },() => {
     cy.setAuthToken();
-    const page = new mainPage();
+    const page = new productSelectionPage();
     page.visit();
     cy.url().should("include", urls.productSelectioManual);
     page.searchDrug();

@@ -1,35 +1,44 @@
 const { defineConfig } = require("cypress");
+const fs = require('fs');
 
+function getEnvConfig(env) {
+  const configPath = `cypress.env.${env}.json`; 
+  if (fs.existsSync(configPath)) { 
+    return JSON.parse(fs.readFileSync(configPath)); 
+  }
+  return {}; 
+}
 
 module.exports = defineConfig({
-  projectId: "843c5x",
+  projectId: "843c5x", 
   e2e: {
-    failOnStatusCode: false,
+    failOnStatusCode: false, 
     viewportWidth: 1366,
-    viewportHeight: 728,
+    viewportHeight: 728, 
+    defaultCommandTimeout: 16000, 
+    pageLoadTimeout: 10000, 
+    requestTimeout: 10000, 
+    responseTimeout: 20000, 
+    taskTimeout: 20000, 
+    excludeSpecPattern: "**/old", 
+
     setupNodeEvents(on, config) {
       
-      // Регистрация плагина Cypress для локального хранилища
       require("cypress-localstorage-commands/plugin")(on, config);
 
-      // Output results to JSON file
       require('cypress-json-results')({
         on,
-        filename: 'results.json',
-      })
+        filename: 'results.json', 
+      });
 
-      // Включаем кэширование между тестами
       config.cacheAcrossSpecs = true;
 
-      console.log("Config env:", config.env); // Отладочный вывод config.env
+      console.log("Config env:", config.env); 
 
-      return config;
+      const envConfig = getEnvConfig(config.env.env);
+      console.log("Загруженные переменные окружения:", envConfig);
+
+      return { ...config, env: { ...config.env, ...envConfig } };
     },
-    defaultCommandTimeout: 16000,
-    pageLoadTimeout: 10000,
-    requestTimeout: 10000,
-    responseTimeout: 20000,
-    taskTimeout: 20000,
-    excludeSpecPattern: "**/old",
   },
 });
