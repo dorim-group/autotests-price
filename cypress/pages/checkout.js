@@ -31,6 +31,8 @@ class checkoutPage {
         textContent.drugFullName,
       );
     });
+    cy.get(checkoutSelectors.returnToCartBtn).should("be.visible");
+    cy.get(checkoutSelectors.confirmOrderbtn).should("be.visible");
   }
 }
 export const checkoutSelectors = {
