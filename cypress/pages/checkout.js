@@ -34,7 +34,7 @@ class checkoutPage {
   }
 }
 export const checkoutSelectors = {
-  returnToCartBtn: '["data-testid="edit-cart-btn"]',
-  confirmOrderbtn: '["open-order-confirmation-btn"]',
+  returnToCartBtn: '[data-testid="edit-cart-btn"]',
+  confirmOrderbtn: '[data-testid="open-order-confirmation-btn"]',
 };
 export default checkoutPage;
