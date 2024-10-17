@@ -13,8 +13,8 @@ module.exports = defineConfig({
   projectId: "843c5x", 
   e2e: {
     failOnStatusCode: false, 
-    viewportWidth: 1366,
-    viewportHeight: 728, 
+    viewportWidth: 1920,
+    viewportHeight: 1080, 
     defaultCommandTimeout: 16000, 
     pageLoadTimeout: 10000, 
     requestTimeout: 10000, 
