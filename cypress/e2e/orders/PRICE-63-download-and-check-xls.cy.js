@@ -4,7 +4,7 @@ import productSelectionPage from "../../pages/product-selection";
 import { textContent } from "../../valid-data/info/validInfo";
 
 describe(
-  "PRICE-59.User confirms-and-check-order",
+  "PRICE-63.User downloads and checks an order",//download, parse,check values in file
   { tags: ["dev", "stage"] },
   () => {
     let page;
@@ -14,7 +14,7 @@ describe(
       page.deleteAllFromCartApi();
     });
 
-    it("PRICE-59.User confirms-and-check-order", () => {
+    it("PRICE-63.User downloads and checks an order", () => {
       const downloadsFolder = "cypress/downloads";
       const XLSX = require("xlsx");
       let contractor = Cypress.env("contractor");
@@ -91,7 +91,6 @@ describe(
       
     });
     after(() => {
-        // Удаление всех файлов из папки downloads после завершения тестов
         cy.task("deleteDownloads");
       });
   },
