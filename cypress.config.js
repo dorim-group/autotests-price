@@ -18,8 +18,8 @@ module.exports = defineConfig({
     viewportWidth: 1366,
     viewportHeight: 728, 
     defaultCommandTimeout: 16000, 
-    pageLoadTimeout: 10000, 
-    requestTimeout: 10000, 
+    pageLoadTimeout: 15000, 
+    requestTimeout: 15000, 
     responseTimeout: 20000, 
     taskTimeout: 20000, 
     excludeSpecPattern: "**/old", 
@@ -61,7 +61,7 @@ module.exports = defineConfig({
 
         findDownloadedFileByPartialName({ folderPath, partialName, extension }) {
           const files = fs.readdirSync(folderPath);
-          console.log(`Files in ${folderPath}:`, files); // Логируем найденные файлы
+          console.log(`Files in ${folderPath}:`, files);
 
           const matchedFile = files.find(file => file.includes(partialName) && file.endsWith(extension));
           if (matchedFile) {

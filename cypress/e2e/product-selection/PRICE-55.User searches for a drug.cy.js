@@ -25,7 +25,7 @@ describe("PRICE-55.User searches for a drug", () => {
     );
     cy.get(productSelectionSelectors.offersHeaderMaker).should(
       "have.text",
-      textContent.makerName,
+      textContent.makerNameFull,
     );
     cy.get(productSelectionSelectors.search)
       .clear()
