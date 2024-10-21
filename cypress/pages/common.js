@@ -1,6 +1,7 @@
 //common selectors
 export const commonSelectors = {
-    logo: '[href="/"]'
+    logo: '[href="/"]',
+    checkbox: '[type="checkbox"]',
 }
 const common = {
 getAndClick(selector) {

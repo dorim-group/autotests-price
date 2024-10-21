@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
-import common from "../../pages";
+import common, { commonSelectors } from "../../pages";
+import { cartSelectors } from "../../pages/cart";
+import { checkoutSelectors } from "../../pages/checkout";
 import productSelectionPage from "../../pages/product-selection";
 import { textContent } from "../../valid-data/info/validInfo";
 
@@ -20,8 +22,6 @@ describe(
       let contractor = Cypress.env("contractor");
       let contractorName = Cypress.env("contractorName");
 
-      console.log(contractor);
-
       cy.setAuthToken();
       page = new productSelectionPage();
 
@@ -30,14 +30,14 @@ describe(
       page.searchDrug();
       page.addToCart(0);
 
-      cy.get('[data-testid="view-checkout-btn"]').click();
-      cy.get('[data-testid="open-order-confirmation-btn"]').click();
+      cy.get(cartSelectors.viewCheckoutBtn).click();
+      cy.get(checkoutSelectors.confirmOrderbtn).click();
       common.getAndClick(
-        '[data-testid="checkout-distributor-selection-proceed-btn"]',
+        checkoutSelectors.distribSelectionProceedBtn,
       );
-      common.getAndClick('[data-testid="place-order-btn"]');
+      common.getAndClick(checkoutSelectors.placeOrder);
 
-      cy.get('[data-state-props-id="documentNumber"]')
+      cy.get(checkoutSelectors.documentNumber)
         .eq(0)
         .invoke("text")
         .then((text) => {
@@ -45,12 +45,11 @@ describe(
           console.log(`Order Number: ${orderNumber}`);
         })
         .then(() => {
-          cy.get('[type="checkbox"]').eq(1).click({ force: true });
+          cy.get(commonSelectors.checkbox).eq(1).click({ force: true });
           cy.intercept("POST", "**/report/generate").as("generateXls");
           cy.get(".css-hno2oj").eq(0).click({ force: true });
           cy.wait("@generateXls").then((interception) => {
             cy.wrap(interception.response?.statusCode).should("eq", 200);
-            cy.wait(2000); //waiting before searching the file
           });
 
           return cy
