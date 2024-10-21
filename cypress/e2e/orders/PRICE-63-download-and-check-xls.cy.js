@@ -4,6 +4,7 @@ import { cartSelectors } from "../../pages/cart";
 import { checkoutSelectors } from "../../pages/checkout";
 import productSelectionPage from "../../pages/product-selection";
 import { textContent } from "../../valid-data/info/validInfo";
+import { urls } from "../../valid-data/info/validInfo"
 
 describe(
   "PRICE-63.User downloads and checks an order",//download, parse,check values in file
@@ -11,10 +12,6 @@ describe(
   () => {
     let page;
     let orderNumber;
-
-    after(() => {
-      page.deleteAllFromCartApi();
-    });
 
     it("PRICE-63.User downloads and checks an order", () => {
       const downloadsFolder = "cypress/downloads";
@@ -90,6 +87,8 @@ describe(
       
     });
     after(() => {
+        cy.visit(`${Cypress.env("BASE_URL_PRICE")}${urls.productSelectioManual}`);
+        cy.contains(textContent.cartIsEmpty).should("exist");
         cy.task("deleteDownloads");
       });
   },
