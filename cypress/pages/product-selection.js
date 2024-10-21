@@ -82,6 +82,7 @@ class productSelectionPage {
         expect(deleteResponse.status).to.eq(200);
       });
     });
+    cy.reload();
   }
 }
 export const productSelectionSelectors = {
