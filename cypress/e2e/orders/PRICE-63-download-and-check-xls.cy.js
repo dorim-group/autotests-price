@@ -43,6 +43,7 @@ describe(
         })
         .then(() => {
           cy.get(commonSelectors.checkbox).eq(1).click({ force: true });
+          cy.get('[theme="dorim-theme"]').eq(1).should('have.css', 'background-color', 'rgb(224, 234, 255)')
           cy.intercept("POST", "**/report/generate").as("generateXls");
           cy.get(".css-hno2oj").eq(0).click({ force: true });
           cy.wait("@generateXls").then((interception) => {
