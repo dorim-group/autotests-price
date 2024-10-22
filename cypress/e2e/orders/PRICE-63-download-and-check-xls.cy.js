@@ -6,8 +6,8 @@ import productSelectionPage from "../../pages/product-selection";
 import { textContent } from "../../valid-data/info/validInfo";
 
 describe(
-  "PRICE-63.User downloads and checks an order",//download, parse,check values in file
-  { tags: ["dev", "stage"] },
+  "PRICE-63.User downloads and checks an order", //download, parse,check values in file
+  { tags: ["dev"] },
   () => {
     let page;
     let orderNumber;
@@ -34,9 +34,7 @@ describe(
 
       cy.get(cartSelectors.viewCheckoutBtn).click();
       cy.get(checkoutSelectors.confirmOrderbtn).click();
-      common.getAndClick(
-        checkoutSelectors.distrSelectionBtn,
-      );
+    //   common.getAndClick(checkoutSelectors.distrSelectionBtn); //fix is on dev already
       common.getAndClick(checkoutSelectors.placeOrderBtn);
 
       cy.get(checkoutSelectors.documentNumber)
@@ -49,7 +47,7 @@ describe(
         .then(() => {
           cy.get(commonSelectors.checkout).eq(1).click({ force: true });
           cy.intercept("POST", "**/report/generate").as("generateXls");
-          cy.get(".css-hno2oj").eq(0).click({ force: true });
+          cy.contains(textContent.download).eq(0).click({ force: true });
           cy.wait("@generateXls").then((interception) => {
             cy.wrap(interception.response?.statusCode).should("eq", 200);
             cy.wait(2000); //waiting before searching the file
@@ -75,7 +73,7 @@ describe(
 
             const cellDistributor = worksheet["C1"].v;
             expect(cellDistributor).to.equal(contractor);
-            
+
             const cellContractor = worksheet["C2"].v;
             expect(cellContractor).to.equal(contractorName);
 
@@ -88,13 +86,10 @@ describe(
             const cellOrder = worksheet["A11"].v;
             expect(cellOrder).to.contain(orderNumber);
           });
-          
         });
-      
     });
     after(() => {
-        cy.task("deleteDownloads");
-      });
+      cy.task("deleteDownloads");
+    });
   },
-  
 );

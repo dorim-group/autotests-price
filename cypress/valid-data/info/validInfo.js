@@ -26,5 +26,6 @@ export const textContent = {
     changeDistr: "Поменять дистрибьютора",
     totalWithVat: "Общая с НДС",
     inCart: "В корзине",
-    items: "Позиций"
+    items: "Позиций",
+    download: "Скачать"
 };
