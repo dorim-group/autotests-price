@@ -6,7 +6,8 @@ export const commonSelectors = {
     menuSubItem: 'li[role="menuitem"]',
     summaryBarTotalPrice: '[data-testid="summary-bar-total-price-with-vat"]',
     summaryBarCount: '[data-testid="summary-bar-entries-count-info"]',
-    summaryBarInfoLabel: '[data-testid="summary-bar-info-label"]'
+    summaryBarInfoLabel: '[data-testid="summary-bar-info-label"]',
+    status: '[data-props-id="status"]',
 }
 const common = {
 getAndClick(selector) {

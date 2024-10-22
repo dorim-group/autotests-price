@@ -36,7 +36,7 @@ describe(
       cy.get(checkoutSelectors.confirmOrderbtn).click();
     //   common.getAndClick(checkoutSelectors.distrSelectionBtn); //fix is on dev already
       common.getAndClick(checkoutSelectors.placeOrderBtn);
-
+    cy.get(commonSelectors.status).first().should('contain', textContent.new)
       cy.get(checkoutSelectors.documentNumber)
         .eq(0)
         .invoke("text")
@@ -52,6 +52,7 @@ describe(
             cy.wrap(interception.response?.statusCode).should("eq", 200);
             cy.wait(2000); //waiting before searching the file
           });
+          cy.get(commonSelectors.status).first().should('contain', textContent.sent)
 
           return cy
             .task("findDownloadedFileByPartialName", {

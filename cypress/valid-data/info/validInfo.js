@@ -27,5 +27,7 @@ export const textContent = {
     totalWithVat: "Общая с НДС",
     inCart: "В корзине",
     items: "Позиций",
-    download: "Скачать"
+    download: "Скачать",
+    new: 'Новый',
+    sent: 'Отправлен'
 };
