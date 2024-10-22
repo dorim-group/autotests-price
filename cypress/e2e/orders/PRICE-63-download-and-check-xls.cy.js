@@ -11,10 +11,10 @@ describe(
   () => {
     let page;
     let orderNumber;
-
-    after(() => {
-      page.deleteAllFromCartApi();
-    });
+    
+    before(() => {
+        page = new productSelectionPage();
+      });
 
     it("PRICE-63.User downloads and checks an order", () => {
       const downloadsFolder = "cypress/downloads";
@@ -25,7 +25,6 @@ describe(
       console.log(contractor);
 
       cy.setAuthToken();
-      page = new productSelectionPage();
 
       page.visit();
       page.deleteAllFromCartApi();
@@ -91,6 +90,7 @@ describe(
     });
     after(() => {
       cy.task("deleteDownloads");
+      page.deleteAllFromCartApi();
     });
   },
 );
