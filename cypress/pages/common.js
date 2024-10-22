@@ -2,6 +2,7 @@
 export const commonSelectors = {
     logo: '[href="/"]',
     menuItem: '[role="menuitem"]',
+    checkout: '[type="checkbox"]',
     menuSubItem: 'li[role="menuitem"]',
     summaryBarTotalPrice: '[data-testid="summary-bar-total-price-with-vat"]',
     summaryBarCount: '[data-testid="summary-bar-entries-count-info"]',
