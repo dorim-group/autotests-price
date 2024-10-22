@@ -5,7 +5,7 @@ import { checkoutSelectors } from "../../pages/checkout";
 import productSelectionPage from "../../pages/product-selection";
 import { textContent } from "../../valid-data/info/validInfo";
 
-describe.skip (
+describe (
   "PRICE-63.User downloads and checks an order", //download, parse,check values in file
   { tags: ["dev"] },
   () => {
