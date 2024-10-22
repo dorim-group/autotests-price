@@ -28,7 +28,7 @@ describe(
           .should("be.visible")
           .should("contain", textContent.blockedTextError);
         cy.get(signInSelectors.errorPopupCloseBtn).click();
-        cy.get(signInSelectors.errorPopup).should("not.be.visible");
+        cy.get(signInSelectors.errorPopup).should("not.exist");
       });
     });
   },

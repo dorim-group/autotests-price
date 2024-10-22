@@ -20,4 +20,11 @@ export const textContent = {
     cartIsEmpty: 'Ваша корзина пуста',
     cartisCleared: 'Корзина была очищенна',
     cartEmptyStateText: 'Нет записей для отображения',
+    drugPrice: '111 639',
+    percent100: "100%",
+    deleteText: "Удалить",
+    changeDistr: "Поменять дистрибьютора",
+    totalWithVat: "Общая с НДС",
+    inCart: "В корзине",
+    items: "Позиций"
 };
