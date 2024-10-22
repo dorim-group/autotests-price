@@ -45,6 +45,10 @@ jobs:
           node-cache-version: v1
           package-manager: npm
           post-install: ''
+      - run:
+          name: Change BASE_URL_PRICE
+          command: |
+            sed -i "s/\"BASE_URL_PRICE\":.*/\"BASE_URL_PRICE\": \"http:\/\/localhost:3000\",/g" cypress.env.<< pipeline.parameters.git-branch >>.json | true
       - cypress/run-tests:
           cypress-command: npm run test:<< pipeline.parameters.git-branch >>-ci
           working-directory: .
