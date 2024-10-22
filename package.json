@@ -24,8 +24,8 @@
     "open:dev": "npx cypress open --env grepTags=dev,env=dev",
     "test:stage": "cypress run --env grepTags=stage,env=stage",
     "open:stage": "npx cypress open --env grepTags=stage,env=stage",
-    "test:dev-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=dev,env=dev-ci",
-    "test:stage-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=stage,env=stage-ci",
+    "test:dev-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=dev,env=dev",
+    "test:stage-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=stage,env=stage",
     "test:main-ci": ""
   }
 }

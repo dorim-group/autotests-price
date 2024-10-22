@@ -7,10 +7,10 @@ orbs:
 parameters:
   docker_image:
     type: string
-    default: test
+    default: 786121685533.dkr.ecr.eu-north-1.amazonaws.com/panel-price:latest
   git-branch:
     type: string
-    default: default
+    default: dev
 
 workflows:
   test:
@@ -23,6 +23,7 @@ workflows:
             branches:
               only:
                 - main
+                - optimize-pipeline
           context:
             - aws-<< pipeline.parameters.git-branch >>
             - github-<< pipeline.parameters.git-branch >>
@@ -45,6 +46,10 @@ jobs:
           node-cache-version: v1
           package-manager: npm
           post-install: ''
+      - run:
+          name: Change BASE_URL_PRICE
+          command: |
+            sed -i "s/\"BASE_URL_PRICE\":.*/\"BASE_URL_PRICE\": \"http:\/\/localhost:3000\",/g" cypress.env.<< pipeline.parameters.git-branch >>.json | true
       - cypress/run-tests:
           cypress-command: npm run test:<< pipeline.parameters.git-branch >>-ci
           working-directory: .
