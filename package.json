@@ -4,9 +4,10 @@
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
     "cypress-file-upload": "^5.0.8",
-    "cypress-grep": "^3.0.4",
+    "cypress-grep": "^2.14.0",
     "cypress-iframe": "^1.0.1",
-    "prettier": "3.0.3"
+    "prettier": "3.0.3",
+    "xlsx": "^0.18.5"
   },
   "dependencies": {
     "axios": "^1.6.5",
@@ -17,14 +18,14 @@
     "jquery": "^3.7.1",
     "swagger-node-codegen": "^1.6.3",
     "typescript": "^5.3.3"
-  },  
-    "scripts": {
-      "test:dev": "cypress run --env grepTags=dev,env=dev",
-      "open:dev": "npx cypress open --env grepTags=dev,env=dev",
-      "test:stage": "cypress run --env grepTags=stage,env=stage",
-      "open:stage": "npx cypress open --env grepTags=stage,env=stage",
-      "test:dev-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=dev,env=dev-ci",
-      "test:stage-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=stage,env=stage-ci",
-      "test:main-ci": ""
-    }
+  },
+  "scripts": {
+    "test:dev": "cypress run --env grepTags=dev,env=dev",
+    "open:dev": "npx cypress open --env grepTags=dev,env=dev",
+    "test:stage": "cypress run --env grepTags=stage,env=stage",
+    "open:stage": "npx cypress open --env grepTags=stage,env=stage",
+    "test:dev-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=dev,env=dev-ci",
+    "test:stage-ci": "cypress run --headless --reporter cypress-circleci-reporter --env grepTags=stage,env=stage-ci",
+    "test:main-ci": ""
+  }
 }

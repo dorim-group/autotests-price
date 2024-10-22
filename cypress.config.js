@@ -1,5 +1,7 @@
 const { defineConfig } = require("cypress");
 const fs = require('fs');
+const path = require('path');
+const XLSX = require('xlsx');
 
 function getEnvConfig(env) {
   const configPath = `cypress.env.${env}.json`; 
@@ -16,8 +18,8 @@ module.exports = defineConfig({
     viewportWidth: 1920,
     viewportHeight: 1080, 
     defaultCommandTimeout: 16000, 
-    pageLoadTimeout: 10000, 
-    requestTimeout: 10000, 
+    pageLoadTimeout: 15000, 
+    requestTimeout: 15000, 
     responseTimeout: 20000, 
     taskTimeout: 20000, 
     excludeSpecPattern: "**/old", 
@@ -37,6 +39,37 @@ module.exports = defineConfig({
 
       const envConfig = getEnvConfig(config.env.env);
       console.log("Загруженные переменные окружения:", envConfig);
+
+      on('task', {
+        readExcelFile({ filePath, sheetName }) {
+          const workbook = XLSX.readFile(filePath);
+          const sheet = workbook.Sheets[sheetName];
+          return XLSX.utils.sheet_to_json(sheet);
+        },
+        
+        deleteDownloads() {
+          const downloadsFolder = path.join(__dirname, 'cypress', 'downloads');
+          fs.readdir(downloadsFolder, (err, files) => {
+            if (err) throw err;
+
+            for (const file of files) {
+              fs.unlinkSync(path.join(downloadsFolder, file));
+            }
+          });
+          return null;
+        },
+
+        findDownloadedFileByPartialName({ folderPath, partialName, extension }) {
+          const files = fs.readdirSync(folderPath);
+          console.log(`Files in ${folderPath}:`, files);
+
+          const matchedFile = files.find(file => file.includes(partialName) && file.endsWith(extension));
+          if (matchedFile) {
+              return path.join(folderPath, matchedFile);
+          }
+          return null;
+        },
+      });
 
       return { ...config, env: { ...config.env, ...envConfig } };
     },

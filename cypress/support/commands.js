@@ -47,5 +47,14 @@ Cypress.Commands.add("BaseLogin", ({ phone, password }) => {
     expect(url).to.contains("/nomenclature");
   });
 });
+const XLSX = require('xlsx');
 
+Cypress.Commands.add('readExcelFile', (filePath, sheetName) => {
+  cy.task('readExcelFile', { filePath, sheetName }).then((rows) => {
+    // Логика работы с данными
+    rows.forEach((row) => {
+      cy.log(JSON.stringify(row));
+    });
+  });
+});
 

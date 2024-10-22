@@ -14,7 +14,8 @@ export const textContent = {
     drugFullName: "auto_test_product",
     foundDrugText: 'Найдено 1 позиция',
     drugFullNameMeasuring: 'auto_test_product 1000 + test №100',
-    makerName: 'auto_test текст для автоматизации поиска (Украина)',
+    makerNameFull: 'auto_test текст для автоматизации поиска (Украина)',
+    makerName: 'auto_test текст для автоматизации поиска',
     drugNameCut: 'test_product',
     cartIsEmpty: 'Ваша корзина пуста',
     cartisCleared: 'Корзина была очищенна',
@@ -25,5 +26,8 @@ export const textContent = {
     changeDistr: "Поменять дистрибьютора",
     totalWithVat: "Общая с НДС",
     inCart: "В корзине",
-    items: "Позиций"
+    items: "Позиций",
+    download: "Скачать",
+    new: 'Новый',
+    sent: 'Отправлен'
 };

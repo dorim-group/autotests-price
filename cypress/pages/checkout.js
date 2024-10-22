@@ -38,5 +38,8 @@ class checkoutPage {
 export const checkoutSelectors = {
   returnToCartBtn: '[data-testid="edit-cart-btn"]',
   confirmOrderbtn: '[data-testid="open-order-confirmation-btn"]',
+  distrSelectionBtn: '[data-testid="checkout-distributor-selection-proceed-btn"]',
+  placeOrderBtn: '[data-testid="place-order-btn"]',
+  documentNumber: '[data-state-props-id="documentNumber"]',
 };
 export default checkoutPage;

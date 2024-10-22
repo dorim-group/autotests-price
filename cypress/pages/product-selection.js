@@ -66,7 +66,7 @@ class productSelectionPage {
 
       const cartId = response.body.cart_id;
 
-      cy.log(`айди корзины выводим для понимания: ${cartId}`);
+      cy.log(`айди корзины: ${cartId}`);
 
       cy.request({
         method: "DELETE",
