@@ -7,10 +7,10 @@ orbs:
 parameters:
   docker_image:
     type: string
-    default: 786121685533.dkr.ecr.eu-north-1.amazonaws.com/panel-price:latest
+    default: test
   git-branch:
     type: string
-    default: dev
+    default: default
 
 workflows:
   test:
@@ -23,7 +23,6 @@ workflows:
             branches:
               only:
                 - main
-                - optimize-pipeline
           context:
             - aws-<< pipeline.parameters.git-branch >>
             - github-<< pipeline.parameters.git-branch >>
