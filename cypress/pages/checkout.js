@@ -6,9 +6,9 @@ class checkoutPage {
   addDrugToTheCart(item) {
     const productSelection = new productSelectionPage();
     productSelection.visit();
-    productSelection.searchDrug();
     productSelection.deleteAllFromCartApi();
     cy.contains(textContent.cartIsEmpty).should("exist");
+    productSelection.searchDrug();
     productSelection.addToCart(item);
   }
 
